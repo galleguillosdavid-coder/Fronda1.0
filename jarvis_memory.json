@@ -1,0 +1,34 @@
+{
+  "user_profile": {
+    "name": "David",
+    "salutation": "Señor",
+    "language": "es-ES",
+    "theme": "iron_man_mark85",
+    "personality_mode": "tactical_loyal",
+    "interests": [
+      "Optimización de Sistemas",
+      "Desarrollo de Software y Rust/Python",
+      "Proyectos de Construcción y Gestión Técnica",
+      "Redes y Protocolos IPv7"
+    ]
+  },
+  "system_telemetry": {
+    "last_session": "2026-09-01T16:14:00",
+    "ram_alert_threshold": 80.0,
+    "cpu_alert_threshold": 85.0,
+    "battery_alert_threshold": 20.0,
+    "proactive_check_interval_seconds": 60
+  },
+  "learned_memories": [
+    "El usuario prefiere respuestas concisas y de alta precisión técnica.",
+    "El equipo cuenta con procesador Intel Core i5 con 16 GB de RAM y gráficos Intel Iris Plus.",
+    "Se configuró el modelo ligero llama3.2:3b como motor base local en Ollama.",
+    "El antivirus Windows Defender quedó configurado para auto-actualizarse cada 4 horas."
+  ],
+  "proactive_log": [
+    {
+      "timestamp": "2026-09-01T16:14:00",
+      "event": "Inicialización del Núcleo de Consciencia y Memoria Persistente"
+    }
+  ]
+}
