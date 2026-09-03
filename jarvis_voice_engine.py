@@ -1,5 +1,5 @@
 """
-J.A.R.V.I.S. Neural Voice Engine (Python + Ollama + Edge-TTS)
+Jarvis Neural Voice Engine (Python + Ollama + Edge-TTS)
 Permite interactuar por voz con Ollama usando voces neuronales de alta definición.
 """
 import os
@@ -9,7 +9,7 @@ import asyncio
 import tempfile
 import urllib.request
 
-VOICE = "es-ES-AlvaroNeural"  # Voz neural masculina en español realista (o "en-GB-RyanNeural" para Jarvis inglés)
+VOICE = "es-ES-AlvaroNeural"  # Voz neural masculina — fija, no depende de variables de entorno
 OLLAMA_API = "http://127.0.0.1:11434/api/chat"
 MODEL = "jarvis"
 
@@ -83,7 +83,7 @@ def listen_microphone() -> str:
 
 async def main():
     print("=" * 60)
-    print("       J.A.R.V.I.S. MOTOR DE VOZ NEURAL EN LÍNEA")
+    print("         JARVIS MOTOR DE VOZ NEURAL EN LÍNEA")
     print("=" * 60)
     print(f"Modelo Ollama: {MODEL} | Voz Neural: {VOICE}")
     print("Di 'salir' o 'apagar' para terminar.\n")
