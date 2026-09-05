@@ -209,7 +209,7 @@ class FrondaHandler(BaseHTTPRequestHandler):
                 has_skill, skill_name, skill_result = fronda_skills.dispatch_skill_intent(last_user_text)
                 
                 # Si el skill es una acción de hardware o app (ej: volumen, mute, abrir app), responder de inmediato
-                if has_skill and skill_name in ["volume", "mute", "unmute", "brightness", "screenshot", "launch_app"]:
+                if has_skill and skill_name in ["telemetry", "volume", "mute", "unmute", "brightness", "screenshot", "launch_app"]:
                     response = skill_result
                 else:
                     # 2. Inyectar contexto dinámico de memoria y/o resultados de búsqueda web/telemetría
