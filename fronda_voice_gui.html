@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FRONDA 1.0 — Clon Digital de David Galleguillos</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #050811;
+      --bg-panel:    rgba(9, 17, 30, 0.85);
+      --border:      rgba(0, 255, 170, 0.22);
+      --border-glow: rgba(0, 255, 170, 0.5);
+      --emerald:     #00ffaa;
+      --cyan:        #00e5ff;
+      --violet:      #8b5cf6;
+      --user-bg:     rgba(139, 92, 246, 0.12);
+      --user-bdr:    rgba(139, 92, 246, 0.45);
+      --fronda-bg:   rgba(0, 255, 170, 0.08);
+      --fronda-bdr:  rgba(0, 255, 170, 0.35);
+      --text:        #e2e8f5;
+      --muted:       rgba(180, 210, 255, 0.55);
+      --glow:        0 0 25px rgba(0, 255, 170, 0.2);
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      overflow: hidden;
+    }
+
+    /* ── Fondo interactivo cuántico ── */
+    body::before {
+      content: '';
+      position: fixed; inset: 0;
+      background:
+        radial-gradient(ellipse 75% 45% at 50% 0%, rgba(0, 255, 170, 0.08) 0%, transparent 70%),
+        radial-gradient(ellipse 55% 40% at 85% 100%, rgba(0, 229, 255, 0.07) 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 10% 80%, rgba(139, 92, 246, 0.06) 0%, transparent 70%);
+      pointer-events: none; z-index: 0;
+    }
+
+    body::after {
+      content: '';
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(rgba(0, 255, 170, 0.02) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 229, 255, 0.02) 1px, transparent 1px);
+      background-size: 36px 36px;
+      pointer-events: none; z-index: 0;
+    }
+
+    #app {
+      position: relative; z-index: 1;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      height: 100vh;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 18px;
+    }
+
+    /* ── Header ── */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 16px 0 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo-ring {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      border: 2px solid var(--emerald);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 25px rgba(0, 255, 170, 0.35), inset 0 0 14px rgba(0, 255, 170, 0.15);
+      flex-shrink: 0;
+      animation: pulse-bio 3.2s ease-in-out infinite;
+      cursor: pointer;
+    }
+    .logo-ring span {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900; font-size: 20px;
+      color: var(--emerald);
+      text-shadow: 0 0 12px var(--emerald);
+    }
+    @keyframes pulse-bio {
+      0%, 100% { box-shadow: 0 0 20px rgba(0,255,170,0.3), inset 0 0 12px rgba(0,255,170,0.1); }
+      50%      { box-shadow: 0 0 35px rgba(0,229,255,0.6), inset 0 0 22px rgba(0,229,255,0.25); border-color: var(--cyan); }
+    }
+
+    .header-info { flex: 1; }
+    .header-info h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 24px; font-weight: 900;
+      letter-spacing: 3px;
+      background: linear-gradient(90deg, #00ffaa, #00e5ff 60%, #a78bfa);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .header-info p {
+      font-size: 13px; color: var(--muted);
+      letter-spacing: 2px; text-transform: uppercase; margin-top: 2px;
+    }
+
+    .header-actions {
+      display: flex; align-items: center; gap: 10px;
+    }
+
+    .pill-btn {
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      color: var(--emerald);
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      padding: 6px 12px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 6px;
+      transition: all 0.25s ease;
+    }
+    .pill-btn:hover {
+      border-color: var(--emerald);
+      box-shadow: 0 0 14px rgba(0,255,170,0.3);
+      color: #fff;
+    }
+
+    #status-badge {
+      display: flex; align-items: center; gap: 8px;
+      padding: 6px 14px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px; letter-spacing: 1px;
+      color: var(--muted);
+      background: var(--bg-panel);
+      transition: all 0.4s;
+      white-space: nowrap;
+    }
+    #status-badge.speaking {
+      border-color: var(--emerald);
+      color: var(--emerald);
+      box-shadow: 0 0 15px rgba(0,255,170,0.3);
+    }
+    #status-badge.processing {
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: 0 0 15px rgba(0,229,255,0.3);
+    }
+    #status-badge.listening {
+      border-color: #ef4444;
+      color: #f87171;
+      box-shadow: 0 0 15px rgba(239,68,68,0.3);
+    }
+    #status-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: #10b981;
+      box-shadow: 0 0 8px #10b981;
+      transition: all 0.4s;
+    }
+    #status-badge.speaking   #status-dot { background: var(--emerald); box-shadow: 0 0 10px var(--emerald); animation: blink 0.8s infinite; }
+    #status-badge.processing #status-dot { background: var(--cyan);    box-shadow: 0 0 10px var(--cyan);    animation: blink 0.6s infinite; }
+    #status-badge.listening  #status-dot { background: #ef4444;       box-shadow: 0 0 10px #ef4444;       animation: blink 0.5s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+    /* ── Barra de Telemetría Rápida ── */
+    #telemetry-bar {
+      display: flex;
+      gap: 15px;
+      padding: 6px 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      border-bottom: 1px solid rgba(0, 255, 170, 0.1);
+    }
+    .telem-item span { color: var(--emerald); font-weight: bold; }
+
+    /* ── Chat Central ── */
+    #chat {
+      overflow-y: auto;
+      padding: 16px 6px;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      scroll-behavior: smooth;
+    }
+    #chat::-webkit-scrollbar { width: 5px; }
+    #chat::-webkit-scrollbar-thumb { background: rgba(0, 255, 170, 0.2); border-radius: 4px; }
+
+    .msg {
+      display: flex; gap: 12px;
+      max-width: 85%;
+      animation: msg-in 0.3s ease-out;
+    }
+    @keyframes msg-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+    .msg.user   { align-self: flex-end; flex-direction: row-reverse; }
+    .msg.fronda { align-self: flex-start; }
+
+    .msg-avatar {
+      width: 36px; height: 36px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px; font-weight: 900;
+      flex-shrink: 0;
+    }
+    .msg.user   .msg-avatar { background: rgba(139,92,246,0.25); border: 1px solid var(--violet); color: #c4b5fd; }
+    .msg.fronda .msg-avatar { background: rgba(0,255,170,0.18); border: 1px solid var(--emerald); color: var(--emerald); }
+
+    .msg-body { max-width: 100%; }
+    .msg-sender {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      letter-spacing: 1px;
+      margin-bottom: 4px;
+      color: var(--muted);
+    }
+    .msg.user   .msg-sender { text-align: right; color: #a78bfa; }
+    .msg.fronda .msg-sender { color: var(--emerald); }
+
+    .msg-bubble {
+      padding: 12px 18px;
+      border-radius: 12px;
+      font-size: 15px;
+      line-height: 1.55;
+      position: relative;
+    }
+    .msg.user .msg-bubble {
+      background: var(--user-bg);
+      border: 1px solid var(--user-bdr);
+      border-top-right-radius: 2px;
+    }
+    .msg.fronda .msg-bubble {
+      background: var(--fronda-bg);
+      border: 1px solid var(--fronda-bdr);
+      border-top-left-radius: 2px;
+    }
+
+    .skill-badge {
+      display: inline-block;
+      margin-bottom: 6px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(0, 229, 255, 0.15);
+      border: 1px solid var(--cyan);
+      color: var(--cyan);
+      font-family: 'Fira Code', monospace;
+      font-size: 10px;
+    }
+
+    /* ── Input y Controles ── */
+    #input-area {
+      padding: 12px 0 16px;
+      border-top: 1px solid var(--border);
+    }
+    #input-row {
+      display: flex; gap: 10px; align-items: flex-end;
+    }
+    #user-input {
+      flex: 1;
+      background: var(--bg-panel);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      color: var(--text);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+      padding: 12px 16px;
+      outline: none;
+      resize: none;
+      max-height: 120px;
+      transition: border-color 0.3s;
+    }
+    #user-input:focus {
+      border-color: var(--emerald);
+      box-shadow: 0 0 15px rgba(0, 255, 170, 0.2);
+    }
+
+    .btn {
+      width: 44px; height: 44px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      color: var(--emerald);
+      font-size: 18px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      flex-shrink: 0;
+    }
+    .btn:hover {
+      border-color: var(--emerald);
+      background: rgba(0, 255, 170, 0.15);
+      box-shadow: 0 0 12px rgba(0, 255, 170, 0.3);
+    }
+    .btn.active {
+      border-color: #ef4444;
+      background: rgba(239, 68, 68, 0.2);
+      color: #ef4444;
+      animation: blink 0.7s infinite;
+    }
+
+    #footer-info {
+      display: flex; justify-content: space-between;
+      margin-top: 8px;
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    /* ── Panel Deslizante de Memoria ── */
+    #memory-drawer {
+      position: fixed;
+      top: 0; right: -420px;
+      width: 400px; height: 100vh;
+      background: rgba(6, 12, 22, 0.96);
+      border-left: 1px solid var(--border);
+      box-shadow: -10px 0 35px rgba(0,0,0,0.7);
+      z-index: 100;
+      transition: right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+      backdrop-filter: blur(12px);
+    }
+    #memory-drawer.open { right: 0; }
+
+    .drawer-header {
+      display: flex; justify-content: space-between; align-items: center;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 12px;
+    }
+    .drawer-header h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--emerald);
+      font-size: 16px;
+      letter-spacing: 2px;
+    }
+
+    #memory-list {
+      flex: 1;
+      overflow-y: auto;
+      display: flex; flex-direction: column; gap: 10px;
+    }
+    .memory-card {
+      background: rgba(0, 255, 170, 0.04);
+      border: 1px solid rgba(0, 255, 170, 0.15);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 13px;
+      line-height: 1.4;
+    }
+    .memory-card .cat {
+      font-family: 'Fira Code', monospace;
+      font-size: 9px;
+      text-transform: uppercase;
+      color: var(--cyan);
+      margin-bottom: 4px;
+    }
+
+    .memory-add-box {
+      display: flex; gap: 6px;
+    }
+    .memory-add-box input {
+      flex: 1;
+      background: rgba(0,0,0,0.4);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      color: #fff;
+      padding: 8px;
+      font-size: 12px;
+      outline: none;
+    }
+  </style>
+</head>
+<body>
+
+<div id="app">
+  <!-- ── Header ── -->
+  <header>
+    <div class="logo-ring" id="btn-toggle-drawer" title="Abrir Memoria Viva">
+      <span>F1</span>
+    </div>
+    <div class="header-info">
+      <h1>FRONDA 1.0</h1>
+      <p>Clon Digital Aumentado de David Galleguillos &bull; Local Ollama</p>
+    </div>
+    <div class="header-actions">
+      <button class="pill-btn" id="btn-open-memory">🧠 MEMORIA VIVA</button>
+      <div id="status-badge">
+        <div id="status-dot"></div>
+        <span id="status-text">EN LÍNEA</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- ── Telemetría Rápida ── -->
+  <div id="telemetry-bar">
+    <div class="telem-item">CPU: <span id="telem-cpu">--%</span></div>
+    <div class="telem-item">RAM: <span id="telem-ram">-- GB</span></div>
+    <div class="telem-item">DISCO: <span id="telem-disk">-- GB LIBRES</span></div>
+    <div class="telem-item">RECUERDOS: <span id="telem-mems">--</span></div>
+  </div>
+
+  <!-- ── Chat ── -->
+  <div id="chat"></div>
+
+  <!-- ── Input ── -->
+  <div id="input-area">
+    <div id="input-row">
+      <button class="btn" id="btn-mic" title="Hablar por micrófono">🎤</button>
+      <textarea id="user-input" rows="1" placeholder="Escribe a Fronda 1.0 o usa el micrófono..."></textarea>
+      <button class="btn" id="btn-stop" title="Detener voz">⏹</button>
+      <button class="btn" id="btn-send" title="Enviar (Enter)">➤</button>
+    </div>
+    <div id="footer-info">
+      <div id="voice-label">VOZ NEURAL: es-ES-AlvaroNeural &bull; CPU Multi-hilo</div>
+      <div>Enter para enviar &bull; Shift+Enter nueva línea</div>
+    </div>
+  </div>
+</div>
+
+<!-- ── Panel Deslizante de Memoria Viva ── -->
+<div id="memory-drawer">
+  <div class="drawer-header">
+    <h3>MEMORIA Y SKILLS</h3>
+    <button class="pill-btn" id="btn-close-memory">✕ CERRAR</button>
+  </div>
+  <p style="font-size: 12px; color: var(--muted);">Historia aprendida sobre David y habilidades incrementales asimiladas en tiempo real.</p>
+  
+  <div id="memory-list">
+    <div style="color: var(--muted); font-size: 13px;">Cargando recuerdos...</div>
+  </div>
+
+  <div class="memory-add-box">
+    <input type="text" id="manual-memory-input" placeholder="Agregar recuerdo o hecho sobre David...">
+    <button class="pill-btn" id="btn-save-manual-mem">+</button>
+  </div>
+</div>
+
+<script>
+  const API = 'http://127.0.0.1:5176';
+  const chat        = document.getElementById('chat');
+  const input       = document.getElementById('user-input');
+  const btnSend     = document.getElementById('btn-send');
+  const btnMic      = document.getElementById('btn-mic');
+  const btnStop     = document.getElementById('btn-stop');
+  const statusBadge = document.getElementById('status-badge');
+  const statusText  = document.getElementById('status-text');
+  const drawer      = document.getElementById('memory-drawer');
+  const btnOpenMem  = document.getElementById('btn-open-memory');
+  const btnCloseMem = document.getElementById('btn-close-memory');
+  const memoryList  = document.getElementById('memory-list');
+
+  let messages  = [];
+  let isWorking = false;
+  let recognizer = null;
+  let micActive  = false;
+
+  function setStatus(state, text) {
+    statusBadge.className = state;
+    statusText.textContent = text;
+  }
+
+  function addMessage(role, text, skill = null, isTyping = false) {
+    const isFronda = role === 'fronda';
+    const div = document.createElement('div');
+    div.className = `msg ${isFronda ? 'fronda' : 'user'}`;
+    
+    let skillHtml = '';
+    if (skill) {
+      skillHtml = `<div class="skill-badge">⚡ SKILL EJECUTADO: ${skill.toUpperCase()}</div>`;
+    }
+
+    div.innerHTML = `
+      <div class="msg-avatar">${isFronda ? 'F1' : 'D'}</div>
+      <div class="msg-body">
+        <div class="msg-sender">${isFronda ? 'FRONDA 1.0' : 'DAVID'}</div>
+        <div class="msg-bubble">
+          ${skillHtml}
+          <div class="bubble-text">
+            ${isTyping ? '<span>Analizando y procesando...</span>' : escapeHtml(text)}
+          </div>
+        </div>
+      </div>`;
+    chat.appendChild(div);
+    chat.scrollTop = chat.scrollHeight;
+    return div;
+  }
+
+  function updateBubble(div, text, skill = null) {
+    const bText = div.querySelector('.bubble-text');
+    if (bText) bText.innerHTML = escapeHtml(text);
+    if (skill && !div.querySelector('.skill-badge')) {
+      const bubble = div.querySelector('.msg-bubble');
+      const badge = document.createElement('div');
+      badge.className = 'skill-badge';
+      badge.textContent = `⚡ SKILL EJECUTADO: ${skill.toUpperCase()}`;
+      bubble.insertBefore(badge, bText);
+    }
+  }
+
+  function escapeHtml(t) {
+    return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');
+  }
+
+  async function sendMessage(text) {
+    text = text.trim();
+    if (!text || isWorking) return;
+
+    isWorking = true;
+    btnSend.disabled = true;
+    input.value = '';
+    input.style.height = 'auto';
+
+    addMessage('user', text);
+    messages.push({ role: 'user', content: text });
+
+    setStatus('processing', 'PROCESANDO...');
+    const typingDiv = addMessage('fronda', '', null, true);
+
+    try {
+      const res = await fetch(`${API}/api/chat`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages, speak: true })
+      });
+
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const data = await res.json();
+      const response = data.response || '(sin respuesta)';
+
+      updateBubble(typingDiv, response, data.skill_executed);
+      messages.push({ role: 'assistant', content: response });
+      setStatus('speaking', 'HABLANDO...');
+
+      // Recargar memorias en segundo plano
+      setTimeout(refreshMemory, 2000);
+
+    } catch (err) {
+      updateBubble(typingDiv, `⚠️ Error al conectar con Fronda 1.0: ${err.message}`);
+      setStatus('', 'EN LÍNEA');
+    } finally {
+      isWorking = false;
+      btnSend.disabled = false;
+    }
+  }
+
+  async function stopAudio() {
+    await fetch(`${API}/api/stop`, { method: 'POST' }).catch(() => {});
+    setStatus('', 'EN LÍNEA');
+  }
+
+  // ── Micrófono ──
+  function initMic() {
+    const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+    if (!SR) { btnMic.title = 'Reconocimiento de voz no soportado en este navegador'; return; }
+    recognizer = new SR();
+    recognizer.lang = 'es-ES';
+    recognizer.continuous = false;
+    recognizer.interimResults = false;
+
+    recognizer.onstart = () => {
+      micActive = true;
+      btnMic.classList.add('active');
+      setStatus('listening', 'ESCUCHANDO...');
+    };
+    recognizer.onend = () => {
+      micActive = false;
+      btnMic.classList.remove('active');
+      if (!isWorking) setStatus('', 'EN LÍNEA');
+    };
+    recognizer.onerror = () => {
+      micActive = false;
+      btnMic.classList.remove('active');
+    };
+    recognizer.onresult = e => {
+      const transcript = e.results[0][0].transcript;
+      input.value = transcript;
+      sendMessage(transcript);
+    };
+  }
+  initMic();
+
+  btnMic.addEventListener('click', () => {
+    if (!recognizer) return;
+    if (micActive) { recognizer.stop(); return; }
+    stopAudio();
+    recognizer.start();
+  });
+
+  btnSend.addEventListener('click', () => sendMessage(input.value));
+  btnStop.addEventListener('click', stopAudio);
+
+  input.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(input.value);
+    }
+  });
+
+  input.addEventListener('input', () => {
+    input.style.height = 'auto';
+    input.style.height = Math.min(input.scrollHeight, 120) + 'px';
+  });
+
+  // ── Memoria Drawer ──
+  async function refreshMemory() {
+    try {
+      const res = await fetch(`${API}/api/memory`);
+      const data = await res.json();
+      const history = data.learned_history || [];
+      document.getElementById('telem-mems').textContent = history.length;
+
+      memoryList.innerHTML = '';
+      if (history.length === 0) {
+        memoryList.innerHTML = '<div style="color:var(--muted)">Sin memorias asimiladas aún.</div>';
+        return;
+      }
+      history.slice().reverse().forEach(m => {
+        const card = document.createElement('div');
+        card.className = 'memory-card';
+        card.innerHTML = `<div class="cat">${m.category || 'general'} &bull; ${m.timestamp ? m.timestamp.split('T')[0] : ''}</div><div>${escapeHtml(m.content)}</div>`;
+        memoryList.appendChild(card);
+      });
+    } catch (_) {}
+  }
+
+  btnOpenMem.addEventListener('click', () => { drawer.classList.add('open'); refreshMemory(); });
+  document.getElementById('btn-toggle-drawer').addEventListener('click', () => { drawer.classList.toggle('open'); refreshMemory(); });
+  btnCloseMem.addEventListener('click', () => drawer.classList.remove('open'));
+
+  document.getElementById('btn-save-manual-mem').addEventListener('click', async () => {
+    const field = document.getElementById('manual-memory-input');
+    const val = field.value.trim();
+    if (!val) return;
+    await fetch(`${API}/api/memory/add`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content: val, category: 'manual' })
+    });
+    field.value = '';
+    refreshMemory();
+  });
+
+  // ── Telemetría Polling ──
+  async function pollTelemetry() {
+    try {
+      const res = await fetch(`${API}/api/telemetry`);
+      const t = await res.json();
+      if (t.cpu_percent !== undefined) {
+        document.getElementById('telem-cpu').textContent = `${t.cpu_percent}%`;
+        document.getElementById('telem-ram').textContent = `${t.ram_used_gb} GB (${t.ram_percent}%)`;
+        document.getElementById('telem-disk').textContent = `${t.disk_free_gb} GB LIBRES`;
+      }
+    } catch (_) {}
+  }
+
+  // ── Polling de estado ──
+  setInterval(async () => {
+    try {
+      const res  = await fetch(`${API}/api/status`);
+      const data = await res.json();
+      if (!isWorking && !micActive) {
+        if (data.speaking)        setStatus('speaking',   'HABLANDO...');
+        else if (data.processing) setStatus('processing', 'PROCESANDO...');
+        else                      setStatus('',            'EN LÍNEA');
+      }
+    } catch (_) {}
+  }, 900);
+
+  setInterval(pollTelemetry, 5000);
+  pollTelemetry();
+  refreshMemory();
+
+  // Bienvenida de Fronda 1.0
+  addMessage('fronda', 'Fronda 1.0 inicializado. Clon digital de David Galleguillos en línea con aprendizaje continuo de memoria y suite de skills activa. ¿En qué trabajamos hoy?');
+</script>
+</body>
+</html>

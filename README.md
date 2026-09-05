@@ -1,49 +1,56 @@
-# 🤖 Jarvis - Autonomous Life Core & Mark 85 Holographic HUD
+# 🌿 Fronda 1.0 — Clon Digital Aumentado de David Galleguillos
 
-Sistema de Asistencia de Inteligencia Artificial Local con arquitectura proactiva, interfaz holográfica táctica en 3D (Three.js), suite de síntesis de voz neural (Edge TTS), reconocimiento de voz, controles de sistema/emergencia, monitoreo de hardware en tiempo real y memoria persistente a largo plazo.
+Sistema de Inteligencia Artificial Local con arquitectura multi-hilo no bloqueante, síntesis de voz neural de alta fidelidad (`edge-tts`), memoria persistente con aprendizaje incremental continuo y suite de skills automatizados para control de Windows y navegación web en tiempo real.
+
+Repositorio oficial: [https://github.com/galleguillosdavid-coder/Fronda1.0](https://github.com/galleguillosdavid-coder/Fronda1.0)
 
 ---
 
 ## ⚡ CARACTERÍSTICAS PRINCIPALES
 
-- **Nombre e Identidad: Jarvis**: Configurado a nivel de modelo Ollama y memoria para reconocerse y responder exclusivamente como **Jarvis**.
-- **HUD Holográfico Mark 85**: Interfaz web inspirada en Iron Man desarrollada con **Three.js** (Reactor de Arco 3D dinámico), líneas de escaneo holográfico y audio procedural Web Audio API.
-- **Suite de Voz Neural de Alta Definición**: Síntesis de voz neural integrada mediante **Edge TTS** (voz masculina en español `es-ES-AlvaroNeural`) en el servidor backend y HUD, junto con reconocimiento de voz continuo (STT) y modo manos libres.
-- **Controles de Sistema y Mandos de Emergencia**:
-  - `▶️ INICIO`: Inicialización y reconexión inmediata de subsistemas.
-  - `🔄 REINICIO`: Purgado y reinicio del núcleo de vida y telemetría.
-  - `🚨 APAGADO DE EMERGENCIA`: Detención inmediata de voz, escucha activa y suspensión segura del sistema.
-- **Memoria Persistente RAG**: Inyección automática del contexto del usuario (`jarvis_memory.json`) en cada interacción con el modelo Ollama.
-- **Dispatcher de Herramientas de Windows**: Apertura directa de aplicaciones del sistema (Chrome, PowerShell, Task Manager, Calculadora, etc.) por comando de voz o texto.
-- **Métricas de Rendimiento en Tiempo Real**: Medición dinámica de latencia por consulta (ms), telemetría de CPU/RAM/Disco y auto-diagnóstico.
-- **Panel Táctico Colapsable y Sliders**: Control deslizante de temperatura de IA, velocidad del reactor 3D y velocidad de voz, con barra lateral auto-deslizante.
+- **Identidad: Clon Digital de David Galleguillos**: Fronda 1.0 no es un asistente genérico ni robótico. Es la manifestación digital de David: comparte su mentalidad de ingeniería pragmática, su visión resolutiva, sus áreas técnicas de especialización y su forma directa de comunicarse.
+- **Aprendizaje Incremental de Memoria Viva (`fronda_memory.py`)**: 
+  - En cada interacción, un extractor asíncrono analiza las conversaciones y guarda nuevos hechos, anécdotas, proyectos y preferencias sobre la vida de David en `fronda_memory.json`.
+  - Inyección dinámica de memoria RAG relevante en el contexto de inferencia del LLM.
+- **Motor LLM Local con Ollama**:
+  - Modelo `fronda` basado en `llama3.2:3b` adaptado a través de `Modelfile.fronda`.
+  - Optimizado para CPU Intel Core i5 con 4 hilos físicos, ventana de contexto ampliada de 4096 tokens y baja latencia.
+- **Suite de Skills Asíncronos (`fronda_skills.py`)**:
+  - **Control de Sistema**: Volumen y mute con `pycaw`, ajuste de brillo con `screen-brightness-control`, capturas de pantalla de alta velocidad con `mss` y `PIL`.
+  - **Mundo Exterior**: Búsqueda web en tiempo real sin límites ni API keys con DuckDuckGo.
+  - **Telemetría en Vivo**: Diagnóstico de CPU, memoria RAM, estado de almacenamiento y batería en tiempo real.
+  - **Lanzador de Apps**: Ejecución instantánea de PowerShell, Calculadora, Bloc de notas, Administrador de tareas, etc.
+- **HUD Bio-Digital Futurista (`fronda_voice_gui.html`)**:
+  - Interfaz web moderna con paleta esmeralda cuántica (`#00ffaa`), cian y obsidiana profunda.
+  - Panel deslizante lateral de **Memoria Viva** para visualizar y agregar recuerdos en tiempo real.
+  - Soporte de reconocimiento de voz por micrófono (Web Speech API) y voz neural masculina (`es-ES-AlvaroNeural`).
+- **Arquitectura Asíncrona**: Hilos dedicados para reproducción de audio y extracción de memoria sin bloquear el servidor HTTP ni la interfaz.
 
 ---
 
-## 📁 ESTRUCTURA DEL PROYECTO
+## 📁 ESTRUCTURA DEL REPOSITORIO
 
-- `jarvis_voice_gui.html` - Interfaz web premium de chat de voz (Micrófono Web Speech, estado del servidor).
-- `jarvis_voice_server.py` - Servidor HTTP backend (puerto 5176) que enlaza Ollama, gestiona la interfaz y ejecuta `edge-tts` localmente.
-- `jarvis_voice_engine.py` - Motor de voz neural independiente y core de generación TTS.
-- `Modelfile.jarvis` - Configuración, directivas de identidad (Jarvis) y parámetros de inferencia para Ollama.
-- `jarvis_memory.json` - Base de datos JSON de recuerdos, proyectos y perfil del usuario.
-- `iniciar_voz_gui.bat` - Lanzador maestro en 1 clic para el servidor Web HUD.
-- `iniciar_voz_alvaro.bat` - Lanzador simple en consola para el motor de voz neural.
-- `GUIA_OLLAMA_Y_ASISTENTE.md` - Manual detallado de uso, comandos y configuración.
-- `RESUMEN_OPTIMIZACION_SISTEMA.md` - Documentación técnica de arquitectura del sistema.
+- `iniciar_fronda.bat` - Lanzador portable en 1 clic (libera puerto, levanta servidor y abre navegador).
+- `fronda_voice_server.py` - Servidor HTTP backend (puerto 5176) que orquesta Ollama, skills, memoria y Edge-TTS.
+- `fronda_voice_gui.html` - Interfaz web bio-digital interactiva (Chat, Telemetría, Micrófono y Panel de Memoria).
+- `fronda_memory.py` - Gestor de persistencia, inyección de contexto RAG y extractor de recuerdos en segundo plano.
+- `fronda_memory.json` - Base de datos viva con la biografía, proyectos, preferencias y aprendizajes sobre David.
+- `fronda_skills.py` - Dispatcher de herramientas del sistema operativo, web y diagnóstico.
+- `Modelfile.fronda` - Definición del modelo, directivas de identidad y parámetros de inferencia para Ollama.
+- `test_skills.py` - Script de validación de dependencias del entorno.
 
 ---
 
 ## 🚀 REQUISITOS E INSTALACIÓN
 
 ### Requisitos previos:
-- Windows 11 / 10
+- Windows 10 / 11
 - Python 3.10+
-- Ollama instalado ([ollama.com](https://ollama.com))
+- Ollama instalado localmente ([ollama.com](https://ollama.com))
 
-### Instalación de dependencias de Python:
+### Dependencias de Python instaladas:
 ```bash
-pip install ollama psutil edge-tts SpeechRecognition pygame-ce
+pip install edge-tts pygame-ce psutil pycaw comtypes pyautogui screen-brightness-control duckduckgo-search beautifulsoup4 playwright aiohttp Pillow mss pytesseract opencv-python
 ```
 
 ---
@@ -51,13 +58,13 @@ pip install ollama psutil edge-tts SpeechRecognition pygame-ce
 ## ⚙️ INICIO RÁPIDO
 
 1. **Crear o actualizar el modelo en Ollama:**
-   ```bash
-   ollama create jarvis -f Modelfile.jarvis
+   ```cmd
+   ollama create fronda -f Modelfile.fronda
    ```
 
-2. **Ejecutar el asistente:**
-   Hacer doble clic en `iniciar_voz_gui.bat` o ejecutar en terminal:
+2. **Iniciar Fronda 1.0:**
+   Ejecutar haciendo doble clic en `iniciar_fronda.bat` o desde la consola:
    ```cmd
-   iniciar_voz_gui.bat
+   iniciar_fronda.bat
    ```
-   Abrirá el HUD automáticamente en tu navegador: `http://127.0.0.1:5176/`.
+   Se abrirá automáticamente la interfaz web en: `http://127.0.0.1:5176/`.

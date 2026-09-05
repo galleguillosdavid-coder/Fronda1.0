@@ -1,17 +1,18 @@
 @echo off
-title Fronda 1.0 - Interfaz de Voz Neural
+title Fronda 1.0 - Clon Digital de David Galleguillos
 color 0a
 
 cd /d "%~dp0"
 
 echo =======================================================
 echo         FRONDA 1.0 - CLON DIGITAL DE DAVID GALLEGUILLOS
-echo         Voz: es-ES-AlvaroNeural
-echo         Puerto: http://127.0.0.1:5176
+echo         Motor: Ollama (Modelo fronda)
+echo         Voz: es-ES-AlvaroNeural (Multi-hilo)
+echo         Interfaz Web: http://127.0.0.1:5176
 echo =======================================================
 echo.
 
-:: Limpiar puerto 5176 si estuviera ocupado
+:: Liberar puerto 5176 si estuviera ocupado
 echo [INFO] Verificando puerto 5176...
 for /f "tokens=5" %%p in ('netstat -aon ^| findstr ":5176 " ^| findstr "LISTENING"') do (
     if not "%%p"=="0" taskkill /PID %%p /F >nul 2>&1
@@ -19,17 +20,17 @@ for /f "tokens=5" %%p in ('netstat -aon ^| findstr ":5176 " ^| findstr "LISTENIN
 
 timeout /t 1 /nobreak >nul
 
-:: Iniciar servidor Fronda
-echo [INFO] Iniciando servidor de Fronda 1.0...
+:: Iniciar servidor Fronda en segundo plano
+echo [INFO] Inicializando servidor de Fronda 1.0...
 start "Fronda 1.0 Voice Server" python fronda_voice_server.py
 
 :: Esperar a que el servidor arranque
 timeout /t 2 /nobreak >nul
 
 :: Abrir la interfaz web
-echo [INFO] Abriendo interfaz en http://127.0.0.1:5176
+echo [INFO] Abriendo HUD en http://127.0.0.1:5176
 start "" "http://127.0.0.1:5176"
 
 echo.
-echo [OK] Fronda 1.0 activo. Cierra esta ventana para apagar.
+echo [OK] Fronda 1.0 activo y escuchando. Cierra esta ventana para finalizar la sesion.
 pause

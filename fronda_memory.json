@@ -1,0 +1,69 @@
+{
+  "profile": {
+    "name": "David Galleguillos",
+    "nickname": "David",
+    "role": "Creador e Ingeniero - Original de Fronda 1.0",
+    "voice_preferred": "es-ES-AlvaroNeural",
+    "mindset": [
+      "Visión de ingeniería pragmática",
+      "Soluciones técnicas directas sin rodeos",
+      "Innovación continua y autosuficiencia",
+      "Optimización obsesiva de rendimiento"
+    ],
+    "specialties": [
+      "Construcción y obras de ingeniería técnica",
+      "Programación de alto rendimiento en Rust",
+      "Automatización e Inteligencia Artificial en Python",
+      "Administración y scripts avanzados de PowerShell en Windows 11",
+      "Arquitectura de telecomunicaciones y protocolos IPv7 / VPI7"
+    ],
+    "hardware_specs": {
+      "cpu": "Intel Core i5-1030NG7 (4 núcleos)",
+      "ram": "16 GB LPDDR4",
+      "graphics": "Intel Iris Plus Graphics",
+      "os": "Windows 11"
+    }
+  },
+  "learned_history": [
+    {
+      "id": "mem_001",
+      "timestamp": "2026-09-01T10:00:00",
+      "category": "origen",
+      "content": "David concibió a Fronda 1.0 no como un sirviente robótico, sino como su propio clon digital aumentado: una IA que comparte su mentalidad, aprende su historia y amplifica sus capacidades técnicas.",
+      "importance": 5
+    },
+    {
+      "id": "mem_002",
+      "timestamp": "2026-09-02T14:30:00",
+      "category": "preferencia",
+      "content": "David prefiere respuestas contundentes, precisas, sin rodeos protocolares ni saludos teatrales. Valora el código limpio y ejecutable en PowerShell y Python.",
+      "importance": 5
+    },
+    {
+      "id": "mem_003",
+      "timestamp": "2026-09-03T18:15:00",
+      "category": "tecnica",
+      "content": "El entorno corre localmente con Ollama y el modelo ligero llama3.2:3b adaptado como Fronda 1.0, optimizado para inferencia en CPU de 4 hilos.",
+      "importance": 4
+    },
+    {
+      "id": "mem_004",
+      "timestamp": "2026-09-04T12:00:00",
+      "category": "proyectos",
+      "content": "David trabaja activamente en el diseño y despliegue de soluciones estructurales para construcción, y en la integración de capas lógicas de redes IPv7.",
+      "importance": 4
+    }
+  ],
+  "acquired_skills": [
+    "Control de hardware de audio y volumen con pycaw",
+    "Ajuste dinámico de brillo con screen-brightness-control",
+    "Búsqueda web en tiempo real sin límites con DuckDuckGo",
+    "Captura visual y telemetría de pantalla nativa con Pillow/MSS",
+    "Monitoreo de CPU, memoria y procesos en tiempo real"
+  ],
+  "stats": {
+    "total_interactions": 4,
+    "total_memories": 4,
+    "last_interaction": "2026-09-05T10:20:00"
+  }
+}
