@@ -30,15 +30,45 @@ Repositorio oficial: [https://github.com/galleguillosdavid-coder/Fronda1.0](http
 
 ---
 
+## 🏛️ ARQUITECTURA MULTI-AGENTE (WSL 2 + WINDOWS HOST)
+
+Implementación de la arquitectura de 3 capas descrita en `Arquitectura_Sistema_Multiagente_FrondaBrick_WSL.pdf`:
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│             CAPA 1: Orquestador Windows (Antigravity)       │
+│  - Planificación estratégica, gestión de Git y UI/Voz       │
+└──────────────┬──────────────────────────────┬───────────────┘
+               │                              │
+               │ HTTP Localhost (11434)       │ wsl.exe CLI
+               ▼                              ▼
+┌───────────────────────────────┐ ┌───────────────────────────┐
+│     CAPA 3: Clon Cognitivo    │ │  CAPA 2: Entorno Linux    │
+│       Fronda Brick v0.01      │ │      (Ubuntu WSL 2)       │
+│ - Ollama en WSL 2             │ │ - Shell bash, Git, tests  │
+│ - qwen2.5-coder optimizado    │ │ - Compilación nativa      │
+│ - temperature 0.3, ctx 2048   │ │ - Aislamiento de tareas   │
+└───────────────────────────────┘ └───────────────────────────┘
+```
+
+- **`fronda_bridge.py`**: Conector universal que enlaza Windows (Capa 1) con WSL (Capa 2) y el modelo local (Capa 3).
+- **`demo_multiagente.py`**: Prueba end-to-end de verificación cruzada entre el host, la CLI de Linux y el razonamiento del clon cognitivo.
+- **`Modelfile.frondabrick`**: Definición de la personalidad pragmática, rigor en ingeniería y especialidades técnicas de David Galleguillos.
+
+---
+
 ## 📁 ESTRUCTURA DEL REPOSITORIO
 
 - `iniciar_fronda.bat` - Lanzador portable en 1 clic (libera puerto, levanta servidor y abre navegador).
 - `fronda_voice_server.py` - Servidor HTTP backend (puerto 5176) que orquesta Ollama, skills, memoria y Edge-TTS.
 - `fronda_voice_gui.html` - Interfaz web bio-digital interactiva (Chat, Telemetría, Micrófono y Panel de Memoria).
+- `fronda_bridge.py` - Puente inter-agente Windows Host ↔ WSL 2 ↔ Ollama.
+- `demo_multiagente.py` - Script demostrativo de validación de la arquitectura multi-agente de 3 capas.
 - `fronda_memory.py` - Gestor de persistencia, inyección de contexto RAG y extractor de recuerdos en segundo plano.
 - `fronda_memory.json` - Base de datos viva con la biografía, proyectos, preferencias y aprendizajes sobre David.
 - `fronda_skills.py` - Dispatcher de herramientas del sistema operativo, web y diagnóstico.
-- `Modelfile.fronda` - Definición del modelo, directivas de identidad y parámetros de inferencia para Ollama.
+- `Modelfile.frondabrick` - Definición del clon cognitivo Fronda Brick v0.01 en WSL 2.
+- `Modelfile.fronda` - Definición del modelo tradicional de asistencia para Ollama.
 - `test_skills.py` - Script de validación de dependencias del entorno.
 
 ---
@@ -46,9 +76,10 @@ Repositorio oficial: [https://github.com/galleguillosdavid-coder/Fronda1.0](http
 ## 🚀 REQUISITOS E INSTALACIÓN
 
 ### Requisitos previos:
-- Windows 10 / 11
+- Windows 10 / 11 con WSL 2 habilitado
+- Ubuntu en WSL 2 con Ollama instalado
 - Python 3.10+
-- Ollama instalado localmente ([ollama.com](https://ollama.com))
+- Repositorio sincronizado en `c:\Users\Frondabrick\Desktop\dvd\Fronda\Fronda1.0`
 
 ### Dependencias de Python instaladas:
 ```bash
@@ -59,9 +90,9 @@ pip install edge-tts pygame-ce psutil pycaw comtypes pyautogui screen-brightness
 
 ## ⚙️ INICIO RÁPIDO
 
-1. **Crear o actualizar el modelo en Ollama:**
-   ```cmd
-   ollama create fronda -f Modelfile.fronda
+1. **Verificar el puente multi-agente:**
+   ```powershell
+   python demo_multiagente.py
    ```
 
 2. **Iniciar Fronda 1.0:**
@@ -70,3 +101,4 @@ pip install edge-tts pygame-ce psutil pycaw comtypes pyautogui screen-brightness
    iniciar_fronda.bat
    ```
    Se abrirá automáticamente la interfaz web en: `http://127.0.0.1:5176/`.
+
