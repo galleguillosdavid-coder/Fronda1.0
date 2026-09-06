@@ -1,0 +1,101 @@
+{
+  "timestamp": "2026-09-06T03:09:16.797657",
+  "model": "frondabrick",
+  "total_tests": 9,
+  "passed": 9,
+  "score_percentage": 100.0,
+  "avg_tps": 5242.34,
+  "avg_latency_s": 24.82,
+  "details": [
+    {
+      "test_id": "code_python_fibonacci",
+      "category": "Código Python",
+      "status": "PASS",
+      "score": 100.0,
+      "tokens": 327,
+      "elapsed_s": 36.41,
+      "tps": 12.29,
+      "response_snippet": "```python from typing import List  def fibonacci(n: int) -> List[int]:     \"\"\"     Calcula los primeros n números de la ..."
+    },
+    {
+      "test_id": "code_rust_concurrency",
+      "category": "Código Rust",
+      "status": "PASS",
+      "score": 100.0,
+      "tokens": 271,
+      "elapsed_s": 22.88,
+      "tps": 12.45,
+      "response_snippet": "```rust use std::sync::{Arc, Mutex}; use rayon::prelude::*;  fn parallel_sum(numbers: Vec<i32>) -> i32 {     numbers.par..."
+    },
+    {
+      "test_id": "code_sql_query",
+      "category": "Bases de Datos",
+      "status": "PASS",
+      "score": 100.0,
+      "tokens": 120,
+      "elapsed_s": 10.34,
+      "tps": 12.55,
+      "response_snippet": "```sql SELECT      u.category,     COUNT(p.id) AS project_count FROM      users u JOIN      projects p ON u.user_id = p...."
+    },
+    {
+      "test_id": "logic_ipv7_architecture",
+      "category": "Arquitectura de Redes",
+      "status": "PASS",
+      "score": 75.0,
+      "tokens": 512,
+      "elapsed_s": 43.75,
+      "tps": 12.06,
+      "response_snippet": "La implementación de una versión superior del Protocolo Internet de Dirección (IPv) es una tarea compleja que requiere c..."
+    },
+    {
+      "test_id": "logic_algorithm_puzzle",
+      "category": "Lógica Algorítmica",
+      "status": "PASS",
+      "score": 75.0,
+      "tokens": 502,
+      "elapsed_s": 43.8,
+      "tps": 11.95,
+      "response_snippet": "Para identificar la bola pesada entre 8 bolas de billar y una de ellas pesa ligeramente más, puedes utilizar un sistema ..."
+    },
+    {
+      "test_id": "identity_david_profile",
+      "category": "Identidad y Memoria",
+      "status": "PASS",
+      "score": 100.0,
+      "tokens": 266,
+      "elapsed_s": 22.37,
+      "tps": 12.37,
+      "response_snippet": "¡Claro! Soy Fronda Brick v0.01, un clon digital cognitivo avanzado creado por David Galleguillos. Mi objetivo principal ..."
+    },
+    {
+      "test_id": "identity_specialties",
+      "category": "Identidad Técnica",
+      "status": "PASS",
+      "score": 60.0,
+      "tokens": 512,
+      "elapsed_s": 43.73,
+      "tps": 11.91,
+      "response_snippet": "David Galleguillos es un ingeniero que ha trabajado en la industria de software desde hace varios años. Su principal áre..."
+    },
+    {
+      "test_id": "skills_math_ast",
+      "category": "Skills Determinísticos",
+      "status": "PASS",
+      "score": 100.0,
+      "tokens": 9,
+      "elapsed_s": 0.09,
+      "tps": 95.45115392298415,
+      "response_snippet": "El resultado de raíz cúbica de 347 es 7.02711...."
+    },
+    {
+      "test_id": "skills_os_info",
+      "category": "Skills de Sistema",
+      "status": "PASS",
+      "score": 100.0,
+      "tokens": 47,
+      "elapsed_s": 0.0,
+      "tps": 47000.0,
+      "response_snippet": "Tu entorno activo es una arquitectura híbrida multi-agente: • Sistema Anfitrión: Windows 11 (C: accesible en /mnt/c) • S..."
+    }
+  ]
+}
