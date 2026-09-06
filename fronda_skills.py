@@ -5,11 +5,82 @@ Maneja el control de hardware, sistema operativo, búsquedas web y telemetría.
 import os
 import sys
 import re
+import ast
+import math
 import json
 import asyncio
 import datetime
 import subprocess
 from pathlib import Path
+
+# ─── Evaluador Matemático Universal Seguro (AST) ──────────────────────────────
+_SAFE_MATH_NAMES = {
+    'sin': math.sin, 'cos': math.cos, 'tan': math.tan,
+    'asin': math.asin, 'acos': math.acos, 'atan': math.atan,
+    'sinh': math.sinh, 'cosh': math.cosh, 'tanh': math.tanh,
+    'sqrt': math.sqrt, 'isqrt': math.isqrt, 'cbrt': getattr(math, 'cbrt', lambda x: x ** (1/3)),
+    'log': math.log, 'log10': math.log10, 'log2': math.log2, 'exp': math.exp,
+    'pi': math.pi, 'e': math.e, 'tau': math.tau,
+    'abs': abs, 'round': round, 'pow': pow, 'ceil': math.ceil, 'floor': math.floor
+}
+
+def evaluate_math_expression(expr_str: str) -> tuple[bool, str]:
+    """Evalúa de forma segura una expresión matemática compleja usando AST."""
+    clean = (expr_str.replace('^', '**')
+                     .replace('×', '*')
+                     .replace('÷', '/')
+                     .replace('x', '*')
+                     .strip())
+    # Reemplazos amigables en español
+    clean = re.sub(r'sen\b', 'sin', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'ra[ií]z\s+c[uú]bica\s+de\s+', 'cbrt(', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'ra[ií]z\s+cuadrada\s+de\s+', 'sqrt(', clean, flags=re.IGNORECASE)
+    clean = re.sub(r'ra[ií]z\s+', 'sqrt(', clean, flags=re.IGNORECASE)
+
+    # Balancear paréntesis si quedaron abiertos
+    open_p = clean.count('(')
+    close_p = clean.count(')')
+    if open_p > close_p:
+        clean += ')' * (open_p - close_p)
+
+    def _eval_node(node):
+        if isinstance(node, ast.Expression):
+            return _eval_node(node.body)
+        elif isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
+            return node.value
+        elif isinstance(node, ast.UnaryOp):
+            val = _eval_node(node.operand)
+            if isinstance(node.op, ast.UAdd): return +val
+            if isinstance(node.op, ast.USub): return -val
+        elif isinstance(node, ast.BinOp):
+            left = _eval_node(node.left)
+            right = _eval_node(node.right)
+            if isinstance(node.op, ast.Add): return left + right
+            if isinstance(node.op, ast.Sub): return left - right
+            if isinstance(node.op, ast.Mult): return left * right
+            if isinstance(node.op, ast.Div): return left / right
+            if isinstance(node.op, ast.FloorDiv): return left // right
+            if isinstance(node.op, ast.Mod): return left % right
+            if isinstance(node.op, ast.Pow): return left ** right
+        elif isinstance(node, ast.Call):
+            if isinstance(node.func, ast.Name) and node.func.id in _SAFE_MATH_NAMES:
+                fn = _SAFE_MATH_NAMES[node.func.id]
+                args = [_eval_node(a) for a in node.args]
+                return fn(*args)
+        elif isinstance(node, ast.Name) and node.id in _SAFE_MATH_NAMES:
+            return _SAFE_MATH_NAMES[node.id]
+        raise ValueError(f"Operador o función no permitida")
+
+    try:
+        parsed = ast.parse(clean, mode='eval')
+        result = _eval_node(parsed)
+        if isinstance(result, float):
+            result_str = f"{round(result, 6):g}"
+        else:
+            result_str = str(result)
+        return True, result_str
+    except Exception:
+        return False, ""
 
 # ─── Telemetría de Sistema ───────────────────────────────────────────────────
 def get_system_telemetry() -> dict:
@@ -179,20 +250,24 @@ def dispatch_skill_intent(user_text: str) -> tuple[bool, str, str]:
                "• Memoria Viva: Aprender incrementalmente tu historia y proyectos en cada interacción.")
         return True, "skills_summary", res
 
-    # 1.2 Cálculos Matemáticos (raíces, potencias, aritmética)
-    # Raíz cúbica
-    cbrt_match = re.search(r"ra[ií]z\s+c[uú]bica\s+de\s+([0-9]+(?:\.[0-9]+)?)", text)
-    if cbrt_match:
-        val = float(cbrt_match.group(1))
-        calc = round(val ** (1.0 / 3.0), 4)
-        return True, "math_calc", f"La raíz cúbica de {val:g} es aproximadamente {calc}."
+    # 1.2 Cálculos Matemáticos Universales (aritmética, raíces, trigonometría, potencias)
+    # Detectar expresiones de cálculo tipo: "cuánto es 5 * 8", "calcula...", "raíz cúbica de...", "347 ^ 2"
+    math_candidate = None
+    math_patterns = [
+        r"(?:cu[aá]nto\s+es|calcula|calcular|resuelve|dime\s+cu[aá]l\s+es\s+el\s+resultado\s+de)\s+([0-9\.\s\+\-\*\/\^\(\)\%x×÷a-z]+)",
+        r"(?:ra[ií]z\s+(?:c[uú]bica|cuadrada)?\s+de\s+[0-9\.]+)",
+        r"^[0-9\.\s\+\-\*\/\^\(\)]+$"
+    ]
+    for p in math_patterns:
+        m = re.search(p, text, re.IGNORECASE)
+        if m:
+            math_candidate = m.group(1) if m.groups() else m.group(0)
+            break
 
-    # Raíz cuadrada
-    sqrt_match = re.search(r"ra[ií]z\s+cuadrada\s+de\s+([0-9]+(?:\.[0-9]+)?)", text)
-    if sqrt_match:
-        val = float(sqrt_match.group(1))
-        calc = round(val ** 0.5, 4)
-        return True, "math_calc", f"La raíz cuadrada de {val:g} es {calc}."
+    if math_candidate:
+        ok, res_val = evaluate_math_expression(math_candidate)
+        if ok:
+            return True, "math_calc", f"El resultado de {math_candidate.strip()} es {res_val}."
 
     # 2. Control de Volumen
     vol_match = re.search(r"(?:pon|ajusta|sube|baja)?\s*(?:el\s+)?volumen\s+(?:a|al)\s+(\d{1,3})%?", text)
@@ -221,12 +296,20 @@ def dispatch_skill_intent(user_text: str) -> tuple[bool, str, str]:
         res = take_screenshot()
         return True, "screenshot", res
 
-    # 5. Búsqueda Web
-    search_match = re.search(r"(?:busca\s+en\s+(?:la\s+web|internet|google|duckduckgo)|busca\s+noticias\s+de|investiga\s+en\s+la\s+web)\s+(.+)", text)
-    if search_match:
-        query = search_match.group(1).strip()
-        res = search_duckduckgo(query)
-        return True, "web_search", f"Resultados en vivo de búsqueda para '{query}':\n{res}"
+    # 5. Búsqueda Web (en tiempo real)
+    search_patterns = [
+        r"(?:busca\s+en\s+(?:la\s+web|internet|google|duckduckgo)|busca\s+noticias\s+de|investiga\s+en\s+la\s+web|busca\s+informaci[oó]n\s+sobre|busca\s+sobre|buscar\s+sobre|busca)\s+(.+)",
+        r"(?:cu[aá]l\s+es\s+el\s+precio\s+de|cotizaci[oó]n\s+de|precio\s+actual\s+de)\s+(.+)",
+        r"(?:noticias\s+sobre|noticias\s+de)\s+(.+)"
+    ]
+    for sp in search_patterns:
+        search_match = re.search(sp, text, re.IGNORECASE)
+        if search_match:
+            query = search_match.group(1).strip()
+            # Ignore if it's clearly a math expression or system command
+            if len(query) > 2 and not re.match(r"^[0-9\.\s\+\-\*\/\^\(\)]+$", query):
+                res = search_duckduckgo(query)
+                return True, "web_search", f"Resultados en tiempo real de búsqueda para '{query}':\n{res}"
 
     # 6. Lanzar aplicaciones
     open_match = re.search(r"(?:abre|abrir|ejecuta|lanzar)\s+(la\s+calculadora|el\s+bloc\s+de\s+notas|el\s+administrador\s+de\s+tareas|powershell|la\s+terminal|calc|notepad|taskmgr)", text)

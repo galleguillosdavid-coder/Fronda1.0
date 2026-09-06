@@ -389,6 +389,7 @@
       <p>Clon Cognitivo de David Galleguillos &bull; Sistema Multi-Agente 3 Capas (Host + WSL 2)</p>
     </div>
     <div class="header-actions">
+      <button class="pill-btn" id="btn-toggle-mode" title="Cambiar modo de potencia">⚡ MODO: INGENIERO (3B)</button>
       <button class="pill-btn" id="btn-open-memory">🧠 MEMORIA VIVA</button>
       <div id="status-badge">
         <div id="status-dot"></div>
@@ -644,6 +645,36 @@
     });
     field.value = '';
     refreshMemory();
+  });
+
+  // ── Switch de Potencia de Modelo (Turbo 1.5B vs Ingeniero 3B) ──
+  const btnToggleMode = document.getElementById('btn-toggle-mode');
+  let currentModel = 'frondabrick';
+
+  btnToggleMode.addEventListener('click', async () => {
+    const nextModel = (currentModel === 'frondabrick') ? 'qwen2.5-coder:1.5b' : 'frondabrick';
+    try {
+      btnToggleMode.textContent = '⚡ CAMBIANDO...';
+      const res = await fetch(`${API}/api/model/switch`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ model: nextModel })
+      });
+      if (res.ok) {
+        currentModel = nextModel;
+        if (currentModel === 'frondabrick') {
+          btnToggleMode.textContent = '⚡ MODO: INGENIERO (3B)';
+          btnToggleMode.style.borderColor = 'var(--emerald)';
+          btnToggleMode.style.color = 'var(--emerald)';
+        } else {
+          btnToggleMode.textContent = '⚡ MODO: TURBO (1.5B)';
+          btnToggleMode.style.borderColor = 'var(--cyan)';
+          btnToggleMode.style.color = 'var(--cyan)';
+        }
+      }
+    } catch (_) {
+      btnToggleMode.textContent = (currentModel === 'frondabrick') ? '⚡ MODO: INGENIERO (3B)' : '⚡ MODO: TURBO (1.5B)';
+    }
   });
 
   // ── Telemetría Polling ──

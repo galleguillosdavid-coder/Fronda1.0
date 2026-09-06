@@ -266,6 +266,19 @@ class FrondaHandler(BaseHTTPRequestHandler):
             except Exception as e:
                 self._json(500, {"error": str(e)})
 
+        elif self.path == "/api/model/switch":
+            try:
+                global MODEL
+                req = json.loads(body)
+                target = req.get("model", "")
+                if target in ["frondabrick", "qwen2.5-coder:1.5b", "qwen2.5-coder:3b"]:
+                    MODEL = target
+                    self._json(200, {"ok": True, "model": MODEL})
+                else:
+                    self._json(400, {"error": "Modelo no válido"})
+            except Exception as e:
+                self._json(500, {"error": str(e)})
+
         elif self.path == "/api/memory/add":
             try:
                 req = json.loads(body)
