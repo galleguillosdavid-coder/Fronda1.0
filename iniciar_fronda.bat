@@ -20,6 +20,12 @@ for /f "tokens=5" %%p in ('netstat -aon ^| findstr ":5176 " ^| findstr "LISTENIN
 
 timeout /t 1 /nobreak >nul
 
+:: Asegurar entorno WSL y Ollama activo
+echo [INFO] Inicializando motor Fronda Brick en WSL 2...
+start /B "" wsl.exe -d Ubuntu -e bash -c "nohup /usr/local/bin/ollama serve > ~/.ollama/ollama.log 2>&1 & sleep 1; tail -f /dev/null" >nul 2>&1
+
+timeout /t 2 /nobreak >nul
+
 :: Iniciar servidor Fronda en segundo plano
 echo [INFO] Inicializando servidor de Fronda 1.0...
 start "Fronda 1.0 Voice Server" python fronda_voice_server.py
