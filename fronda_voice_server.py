@@ -11,7 +11,7 @@ import asyncio
 import tempfile
 import threading
 import urllib.request
-from http.server import HTTPServer, BaseHTTPRequestHandler
+from http.server import HTTPServer, ThreadingHTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 
 # Importar módulos propios de Fronda 1.0
@@ -274,13 +274,16 @@ class FrondaHandler(BaseHTTPRequestHandler):
             self.send_error(404)
 
     def _json(self, code: int, data: dict):
-        body = json.dumps(data, ensure_ascii=False).encode("utf-8")
-        self.send_response(code)
-        self.send_header("Content-Type", "application/json; charset=utf-8")
-        self.send_header("Content-Length", str(len(body)))
-        self._cors()
-        self.end_headers()
-        self.wfile.write(body)
+        try:
+            body = json.dumps(data, ensure_ascii=False).encode("utf-8")
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json; charset=utf-8")
+            self.send_header("Content-Length", str(len(body)))
+            self._cors()
+            self.end_headers()
+            self.wfile.write(body)
+        except (ConnectionResetError, ConnectionAbortedError, BrokenPipeError):
+            pass
 
 # ─── Main ─────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
@@ -298,7 +301,7 @@ if __name__ == "__main__":
         daemon=True
     ).start()
 
-    server = HTTPServer(("127.0.0.1", PORT), FrondaHandler)
+    server = ThreadingHTTPServer(("127.0.0.1", PORT), FrondaHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
