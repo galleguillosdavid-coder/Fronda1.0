@@ -189,6 +189,8 @@ class FrondaHandler(BaseHTTPRequestHandler):
             self._json(200, memory_manager.get_data())
         elif self.path == "/api/telemetry":
             self._json(200, fronda_skills.get_system_telemetry())
+        elif self.path == "/api/skills/requests":
+            self._json(200, fronda_skills.get_skill_requests())
         else:
             self.send_error(404)
 
@@ -227,6 +229,13 @@ class FrondaHandler(BaseHTTPRequestHandler):
 
                     response = query_ollama(messages, system_context=system_context)
 
+                # 2.1 Detectar si la respuesta refleja una limitación y registrar solicitud para el Asistente
+                ticket_created = None
+                if not has_skill:
+                    ticket_created = fronda_skills.check_for_skill_limitation(last_user_text, response)
+                    if ticket_created:
+                        response += f"\n\n📌 [He registrado la solicitud {ticket_created['id']} para que el Asistente Desarrollador (Antigravity) construya e instale esta habilidad en mis sistemas]."
+
                 with _lock:
                     is_processing = False
 
@@ -242,7 +251,8 @@ class FrondaHandler(BaseHTTPRequestHandler):
                 self._json(200, {
                     "response": response,
                     "voice": VOICE,
-                    "skill_executed": skill_name if has_skill else None
+                    "skill_executed": skill_name if has_skill else None,
+                    "skill_request": ticket_created
                 })
 
             except Exception as e:

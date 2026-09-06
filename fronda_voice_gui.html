@@ -361,6 +361,58 @@
       margin-bottom: 4px;
     }
 
+    .drawer-tabs {
+      display: flex; gap: 8px; border-bottom: 1px solid var(--border); padding-bottom: 8px;
+    }
+    .drawer-tab-btn {
+      background: none; border: none; color: var(--muted);
+      font-family: 'Fira Code', monospace; font-size: 11px;
+      cursor: pointer; padding: 4px 8px; border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .drawer-tab-btn.active {
+      color: var(--emerald); background: rgba(0,255,170,0.1); font-weight: bold;
+    }
+
+    .skill-req-card {
+      background: rgba(167, 139, 250, 0.06);
+      border: 1px solid rgba(167, 139, 250, 0.25);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 12px;
+      line-height: 1.4;
+    }
+    .skill-req-card .req-badge {
+      display: inline-block;
+      font-family: 'Fira Code', monospace;
+      font-size: 9px;
+      padding: 2px 6px;
+      border-radius: 4px;
+      background: rgba(234, 179, 8, 0.15);
+      border: 1px solid #eab308;
+      color: #fde047;
+      margin-bottom: 4px;
+    }
+    .skill-req-card.installed .req-badge {
+      background: rgba(0, 255, 170, 0.15);
+      border-color: var(--emerald);
+      color: var(--emerald);
+    }
+    .skill-req-card .req-meta {
+      color: var(--muted); font-size: 11px; margin-top: 4px;
+    }
+
+    .skill-request-bubble {
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: rgba(167, 139, 250, 0.1);
+      border: 1px dashed rgba(167, 139, 250, 0.5);
+      border-radius: 6px;
+      font-size: 12px;
+      color: #ddd6fe;
+      display: flex; align-items: center; gap: 8px;
+    }
+
     .memory-add-box {
       display: flex; gap: 6px;
     }
@@ -424,21 +476,34 @@
   </div>
 </div>
 
-<!-- ── Panel Deslizante de Memoria Viva ── -->
+<!-- ── Panel Deslizante de Memoria Viva y Solicitudes de Skills ── -->
 <div id="memory-drawer">
   <div class="drawer-header">
-    <h3>MEMORIA Y SKILLS</h3>
+    <h3>SISTEMAS COGNITIVOS</h3>
     <button class="pill-btn" id="btn-close-memory">✕ CERRAR</button>
   </div>
-  <p style="font-size: 12px; color: var(--muted);">Historia aprendida sobre David y habilidades incrementales asimiladas en tiempo real.</p>
   
-  <div id="memory-list">
-    <div style="color: var(--muted); font-size: 13px;">Cargando recuerdos...</div>
+  <div class="drawer-tabs">
+    <button class="drawer-tab-btn active" id="tab-btn-memory">🧠 MEMORIA VIVA</button>
+    <button class="drawer-tab-btn" id="tab-btn-requests">🛠️ SOLICITUDES SKILLS (<span id="req-count">0</span>)</button>
   </div>
 
-  <div class="memory-add-box">
-    <input type="text" id="manual-memory-input" placeholder="Agregar recuerdo o hecho sobre David...">
-    <button class="pill-btn" id="btn-save-manual-mem">+</button>
+  <div id="tab-content-memory">
+    <p style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">Historia aprendida sobre David y hechos asimilados en tiempo real.</p>
+    <div id="memory-list">
+      <div style="color: var(--muted); font-size: 13px;">Cargando recuerdos...</div>
+    </div>
+    <div class="memory-add-box" style="margin-top: 12px;">
+      <input type="text" id="manual-memory-input" placeholder="Agregar recuerdo o hecho sobre David...">
+      <button class="pill-btn" id="btn-save-manual-mem">+</button>
+    </div>
+  </div>
+
+  <div id="tab-content-requests" style="display: none; flex: 1; flex-direction: column;">
+    <p style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">Habilidades que Fronda no pudo responder y fueron enviadas como ticket a <b>Antigravity</b> para ser programadas e instaladas.</p>
+    <div id="requests-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
+      <div style="color: var(--muted); font-size: 13px;">No hay solicitudes pendientes.</div>
+    </div>
   </div>
 </div>
 
@@ -538,8 +603,13 @@
       messages.push({ role: 'assistant', content: response });
       setStatus('speaking', 'HABLANDO...');
 
-      // Recargar memorias en segundo plano
-      setTimeout(refreshMemory, 2000);
+      // Recargar memorias y solicitudes en segundo plano
+      setTimeout(() => {
+        refreshMemory();
+        if (data.skill_request) {
+          refreshRequests();
+        }
+      }, 1500);
 
     } catch (err) {
       updateBubble(typingDiv, `⚠️ Error al conectar con Fronda 1.0: ${err.message}`);
@@ -630,9 +700,66 @@
     } catch (_) {}
   }
 
-  btnOpenMem.addEventListener('click', () => { drawer.classList.add('open'); refreshMemory(); });
-  document.getElementById('btn-toggle-drawer').addEventListener('click', () => { drawer.classList.toggle('open'); refreshMemory(); });
+  btnOpenMem.addEventListener('click', () => { drawer.classList.add('open'); refreshMemory(); refreshRequests(); });
+  document.getElementById('btn-toggle-drawer').addEventListener('click', () => { drawer.classList.toggle('open'); refreshMemory(); refreshRequests(); });
   btnCloseMem.addEventListener('click', () => drawer.classList.remove('open'));
+
+  // ── Tabs en Drawer ──
+  const tabBtnMem = document.getElementById('tab-btn-memory');
+  const tabBtnReq = document.getElementById('tab-btn-requests');
+  const tabContentMem = document.getElementById('tab-content-memory');
+  const tabContentReq = document.getElementById('tab-content-requests');
+
+  tabBtnMem.addEventListener('click', () => {
+    tabBtnMem.classList.add('active');
+    tabBtnReq.classList.remove('active');
+    tabContentMem.style.display = 'block';
+    tabContentReq.style.display = 'none';
+  });
+
+  tabBtnReq.addEventListener('click', () => {
+    tabBtnReq.classList.add('active');
+    tabBtnMem.classList.remove('active');
+    tabContentMem.style.display = 'none';
+    tabContentReq.style.display = 'flex';
+    refreshRequests();
+  });
+
+  async function refreshRequests() {
+    try {
+      const res = await fetch(`${API}/api/skills/requests`);
+      const list = await res.json();
+      const reqListDiv = document.getElementById('requests-list');
+      const reqCountSpan = document.getElementById('req-count');
+      
+      const pending = list.filter(r => r.estado === 'PENDIENTE_DESARROLLO');
+      reqCountSpan.textContent = pending.length;
+
+      reqListDiv.innerHTML = '';
+      if (list.length === 0) {
+        reqListDiv.innerHTML = '<div style="color:var(--muted); font-size: 13px;">No hay solicitudes registradas aún.</div>';
+        return;
+      }
+
+      list.slice().reverse().forEach(req => {
+        const card = document.createElement('div');
+        const isPending = req.estado === 'PENDIENTE_DESARROLLO';
+        card.className = `skill-req-card ${isPending ? '' : 'installed'}`;
+        card.innerHTML = `
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span class="req-badge">${req.id} &bull; ${req.categoria.toUpperCase()}</span>
+            <span style="font-family:'Fira Code'; font-size:10px; color:${isPending ? '#fde047':'var(--emerald)'}">
+              ${isPending ? '⏳ PENDIENTE ANTIGRAVITY' : '✅ INSTALADO'}
+            </span>
+          </div>
+          <div style="margin-top:6px; font-weight:600; color:var(--text);">${escapeHtml(req.peticion_usuario)}</div>
+          <div class="req-meta">${escapeHtml(req.descripcion)}</div>
+          <div style="font-size:10px; color:var(--muted); margin-top:4px;">Asignado a: <b>${req.responsable || 'Antigravity'}</b></div>
+        `;
+        reqListDiv.appendChild(card);
+      });
+    } catch (_) {}
+  }
 
   document.getElementById('btn-save-manual-mem').addEventListener('click', async () => {
     const field = document.getElementById('manual-memory-input');

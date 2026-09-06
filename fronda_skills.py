@@ -341,3 +341,102 @@ def dispatch_skill_intent(user_text: str) -> tuple[bool, str, str]:
             return True, "wsl_command", f"Error al ejecutar en WSL: {e}"
 
     return False, "", ""
+
+# ─── Registro de Solicitudes de Habilidades para el Asistente ─────────────────
+SKILLS_REQUESTS_FILE = Path(__file__).parent / "solicitudes_habilidades.json"
+
+LIMITATION_PATTERNS = [
+    r"\bno\s+s[eé]\b",
+    r"\bno\s+puedo\b",
+    r"\bno\s+tengo\s+(?:la\s+capacidad|acceso|la\s+habilidad|permiso|instalado|soporte|informaci[oó]n|herramientas?)\b",
+    r"\bno\s+dispongo\s+de\b",
+    r"\bno\s+est[aá]\s+a\s+mi\s+alcance\b",
+    r"\bno\s+me\s+es\s+posible\b",
+    r"\bno\s+poseo\b",
+    r"\bno\s+cuento\s+con\b"
+]
+
+def check_for_skill_limitation(user_prompt: str, bot_response: str) -> dict | None:
+    """
+    Analiza si la respuesta del modelo expresa una limitación técnica o de habilidad.
+    Si es así, estructura un ticket de solicitud para que el Asistente Desarrollador (Antigravity)
+    la construya e instale en Fronda.
+    """
+    if not bot_response:
+        return None
+
+    resp_lower = bot_response.lower()
+    
+    # Comprobar si hay una frase de limitación
+    is_limited = False
+    for pat in LIMITATION_PATTERNS:
+        if re.search(pat, resp_lower):
+            is_limited = True
+            break
+
+    if not is_limited:
+        return None
+
+    # Extraer el concepto central pedido por David
+    prompt_clean = user_prompt.strip()
+    ticket_id = f"REQ-{datetime.datetime.now().strftime('%Y%m%d-%H%M%S')}"
+
+    # Sugerencia de categoría de habilidad
+    category = "general"
+    p_lower = prompt_clean.lower()
+    if any(k in p_lower for k in ["pdf", "excel", "csv", "doc", "archivo", "leer", "texto"]):
+        category = "procesamiento_archivos"
+    elif any(k in p_lower for k in ["clima", "tiempo", "temperatura", "meteorología"]):
+        category = "clima_meteorologia"
+    elif any(k in p_lower for k in ["audio", "video", "youtube", "música", "mp3", "sonido"]):
+        category = "multimedia"
+    elif any(k in p_lower for k in ["red", "ip", "ipv7", "ping", "puerto", "socket", "servidor"]):
+        category = "redes_telecomunicaciones"
+    elif any(k in p_lower for k in ["pantalla", "raton", "teclado", "click", "ventana", "abrir"]):
+        category = "automatizacion_os"
+
+    ticket = {
+        "id": ticket_id,
+        "fecha": datetime.datetime.now().isoformat(),
+        "categoria": category,
+        "peticion_usuario": prompt_clean,
+        "respuesta_original": bot_response,
+        "estado": "PENDIENTE_DESARROLLO",
+        "descripcion": f"Habilidad requerida para responder: '{prompt_clean}'",
+        "responsable": "Asistente Desarrollador (Antigravity)",
+        "notas": "Pendiente de codificación en fronda_skills.py e instalación de librerías."
+    }
+
+    try:
+        solicitudes = []
+        if SKILLS_REQUESTS_FILE.exists():
+            with open(SKILLS_REQUESTS_FILE, "r", encoding="utf-8") as f:
+                try:
+                    solicitudes = json.load(f)
+                except Exception:
+                    solicitudes = []
+        
+        # Evitar duplicados recientes con la misma petición exacta
+        if not any(s.get("peticion_usuario", "").lower() == prompt_clean.lower() for s in solicitudes if s.get("estado") == "PENDIENTE_DESARROLLO"):
+            solicitudes.append(ticket)
+            with open(SKILLS_REQUESTS_FILE, "w", encoding="utf-8") as f:
+                json.dump(solicitudes, f, indent=2, ensure_ascii=False)
+            print(f"[Fronda Skills] Ticket de solicitud creado con éxito: {ticket_id}")
+    except Exception as e:
+        print(f"[Fronda Skills Error]: No se pudo guardar la solicitud: {e}")
+
+    return ticket
+
+def get_skill_requests(filtro_estado: str = None) -> list[dict]:
+    """Lee las solicitudes de habilidades guardadas."""
+    if not SKILLS_REQUESTS_FILE.exists():
+        return []
+    try:
+        with open(SKILLS_REQUESTS_FILE, "r", encoding="utf-8") as f:
+            data = json.load(f)
+            if filtro_estado:
+                return [d for d in data if d.get("estado") == filtro_estado]
+            return data
+    except Exception:
+        return []
+

@@ -1,0 +1,13 @@
+[
+  {
+    "id": "REQ-20260905-235228",
+    "fecha": "2026-09-05T23:52:28.634570",
+    "categoria": "procesamiento_archivos",
+    "peticion_usuario": "convierte este archivo de video mkv a mp4",
+    "respuesta_original": "Lo siento David, no tengo la capacidad de convertir archivos de video mkv a mp4.",
+    "estado": "PENDIENTE_DESARROLLO",
+    "descripcion": "Habilidad requerida para responder: 'convierte este archivo de video mkv a mp4'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Pendiente de codificación en fronda_skills.py e instalación de librerías."
+  }
+]
