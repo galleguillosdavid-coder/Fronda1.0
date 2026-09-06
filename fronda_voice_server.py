@@ -112,7 +112,12 @@ def query_ollama(messages: list, system_context: str = "") -> str:
     payload = json.dumps({
         "model": MODEL,
         "messages": full_messages,
-        "stream": False
+        "stream": False,
+        "options": {
+            "temperature": 0.3,
+            "num_ctx": 2048,
+            "num_predict": 256
+        }
     }).encode("utf-8")
 
     req = urllib.request.Request(

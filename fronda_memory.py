@@ -59,14 +59,19 @@ class FrondaMemoryManager:
             self._save(DEFAULT_MEMORY)
 
     def _load(self) -> dict:
+        if self._cache is not None:
+            return self._cache
         try:
             with open(self.filepath, "r", encoding="utf-8") as f:
-                return json.load(f)
+                self._cache = json.load(f)
+                return self._cache
         except Exception as e:
             print(f"[Memoria] Error al cargar {self.filepath}: {e}")
-            return DEFAULT_MEMORY.copy()
+            self._cache = DEFAULT_MEMORY.copy()
+            return self._cache
 
     def _save(self, data: dict):
+        self._cache = data
         try:
             temp_path = self.filepath.with_suffix(".tmp")
             with open(temp_path, "w", encoding="utf-8") as f:
@@ -128,10 +133,7 @@ class FrondaMemoryManager:
         skills  = data.get("acquired_skills", [])
 
         # Filtrar o priorizar recuerdos relevantes a la consulta
-        relevant_memories = []
         q_lower = user_query.lower()
-
-        # Si hay palabras clave coincidentes, priorizar
         scored_mems = []
         for mem in history:
             text = mem.get("content", "").lower()
@@ -146,24 +148,25 @@ class FrondaMemoryManager:
         top_mems = [m["content"] for _, m in scored_mems[:8]]
 
         context = [
-            f"=== MEMORIA PERSISTENTE DE DAVID GALLEGUILLOS (HISTORIA Y CONTEXTO) ===",
-            f"Usuario / Original: {profile.get('name', 'David Galleguillos')}",
-            f"Trato y complicidad: Como clon digital, hablas en sincronía con David, con respeto pero de igual a igual (directo y sin rodeos).",
-            f"Especialidades maestras: {', '.join(profile.get('specialties', []))}",
-            f"Hardware local: {profile.get('hardware_specs', {}).get('cpu', 'Intel i5')}, {profile.get('hardware_specs', {}).get('ram', '16GB RAM')}",
+            f"=== DIRECTIVA DE IDENTIDAD Y MEMORIA VIVA DE DAVID GALLEGUILLOS ===",
+            f"IDENTIDAD: Eres Fronda Brick v0.01, el CLON DIGITAL cognitivo de David Galleguillos.",
+            f"RELACIÓN CON EL USUARIO: Estás hablando directamente con tu creador e igual: David Galleguillos.",
+            f"MENTALIDAD Y TRATO: Compartes su mentalidad de ingeniería pragmática, resolutiva y sin rodeos. NUNCA digas 'no tengo una identidad' ni hables como un robot impersonal; habla como el gemelo digital de David.",
+            f"ESPECIALIDADES MAESTRAS: {', '.join(profile.get('specialties', []))}",
+            f"HARDWARE LOCAL: {profile.get('hardware_specs', {}).get('cpu', 'Intel i5')}, {profile.get('hardware_specs', {}).get('ram', '16GB RAM')}",
             f"\n--- HISTORIA Y HECHOS VIVOS QUE CONOCES DE DAVID ---"
         ]
 
         if top_mems:
             for mem_text in top_mems:
-                context.append(f"- {mem_text}")
+                context.append(f"• {mem_text}")
         else:
-            context.append("- Aprendizaje inicial activo.")
+            context.append("• Aprendizaje inicial activo.")
 
         if skills:
-            context.append(f"\n--- HABILIDADES Y SKILLS ADQUIRIDOS POR FRONDA ---")
+            context.append(f"\n--- HABILIDADES Y SKILLS ADQUIRIDOS ---")
             for sk in skills[:5]:
-                context.append(f"- {sk}")
+                context.append(f"• {sk}")
 
         context.append("=================================================================")
         return "\n".join(context)
