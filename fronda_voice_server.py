@@ -242,8 +242,8 @@ class FrondaHandler(BaseHTTPRequestHandler):
                 # 1. Evaluar si dispara un Skill directo
                 has_skill, skill_name, skill_result = fronda_skills.dispatch_skill_intent(last_user_text)
                 
-                # Si el skill es una acción de hardware, cálculo, hora o app (ej: volumen, hora, estado, cálculos, comando WSL), responder de inmediato
-                if has_skill and skill_name in ["telemetry", "volume", "mute", "unmute", "brightness", "screenshot", "launch_app", "wsl_command", "time_date", "math_calc", "skills_summary"]:
+                # Si el skill es una acción de hardware, cálculo, hora, OS o app (ej: volumen, hora, estado, cálculos, comando WSL), responder de inmediato
+                if has_skill and skill_name in ["telemetry", "volume", "mute", "unmute", "brightness", "screenshot", "launch_app", "wsl_command", "time_date", "math_calc", "skills_summary", "os_info"]:
                     response = skill_result
                 else:
                     # 2. Inyectar contexto dinámico de memoria y/o resultados de búsqueda web/telemetría

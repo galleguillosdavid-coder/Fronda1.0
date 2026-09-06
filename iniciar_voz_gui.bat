@@ -19,9 +19,9 @@ for /f "tokens=5" %%p in ('netstat -aon ^| findstr ":5176 " ^| findstr "LISTENIN
 
 timeout /t 1 /nobreak >nul
 
-:: Iniciar servidor Fronda
-echo [INFO] Iniciando servidor de Fronda 1.0...
-start "Fronda 1.0 Voice Server" python fronda_voice_server.py
+:: Iniciar servidor Fronda en WSL
+echo [INFO] Iniciando servidor de Fronda 1.0 en WSL Ubuntu...
+start "Fronda 1.0 WSL Engine" wsl.exe -d Ubuntu -e bash -c "cd /mnt/c/Users/Frondabrick/Desktop/dvd/Fronda/Fronda1.0 && python3 -u fronda_voice_server.py"
 
 :: Esperar a que el servidor arranque
 timeout /t 2 /nobreak >nul

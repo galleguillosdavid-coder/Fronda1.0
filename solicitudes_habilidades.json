@@ -9,5 +9,16 @@
     "descripcion": "Habilidad requerida para responder: 'convierte este archivo de video mkv a mp4'",
     "responsable": "Asistente Desarrollador (Antigravity)",
     "notas": "Pendiente de codificación en fronda_skills.py e instalación de librerías."
+  },
+  {
+    "id": "REQ-20260906-025816",
+    "fecha": "2026-09-06T02:58:16.207292",
+    "categoria": "general",
+    "peticion_usuario": "cual es mi sistema ioerativo?",
+    "respuesta_original": "Lo siento, pero como un asistente de inteligencia artificial, no tengo acceso a la información del sistema operativo que estás utilizando. Sin embargo, puedes verificar esto en tu propio equipo haciendo clic derecho sobre el icono de Windows y seleccionando \"Sobre este equipo\". Aquí encontrarás detalles sobre tu sistema operativo, incluyendo la versión de Windows.",
+    "estado": "INSTALADO",
+    "descripcion": "Habilidad requerida para responder: 'cual es mi sistema ioerativo?'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'os_info' en fronda_skills.py con soporte multi-entorno Windows 11 + WSL 2."
   }
 ]

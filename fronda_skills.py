@@ -88,8 +88,13 @@ def get_system_telemetry() -> dict:
     try:
         import psutil
         cpu_usage = psutil.cpu_percent(interval=0.2)
-        ram = psutil.virtual_memory()
-        disk = psutil.disk_usage('C:\\')
+        # Detección de disco compatible con Windows y WSL Linux (/mnt/c o /)
+        disk_path = '/'
+        if sys.platform == 'win32':
+            disk_path = 'C:\\'
+        elif os.path.exists('/mnt/c'):
+            disk_path = '/mnt/c'
+        disk = psutil.disk_usage(disk_path)
         
         telemetry = {
             "cpu_percent": cpu_usage,
@@ -97,7 +102,8 @@ def get_system_telemetry() -> dict:
             "ram_used_gb": round(ram.used / (1024**3), 1),
             "ram_total_gb": round(ram.total / (1024**3), 1),
             "disk_percent": disk.percent,
-            "disk_free_gb": round(disk.free / (1024**3), 1)
+            "disk_free_gb": round(disk.free / (1024**3), 1),
+            "os_environment": "WSL 2 (Ubuntu 26.04) + Windows 11 Host" if os.path.exists('/mnt/c') else sys.platform
         }
         
         # Batería si es laptop
@@ -237,6 +243,14 @@ def dispatch_skill_intent(user_text: str) -> tuple[bool, str, str]:
         if "battery_percent" in data:
             res += f"\n• Batería: {data.get('battery_percent')}% ({'Cargando' if data.get('power_plugged') else 'Descarga'})"
         return True, "telemetry", res
+
+    # 1.05 Sistema Operativo / Arquitectura
+    if any(k in text for k in ["sistema operativo", "sistema ioerativo", "qué sistema tengo", "que sistema tengo", "qué os tengo", "que os tengo", "versión de windows", "version de windows"]):
+        res = ("Tu entorno activo es una arquitectura híbrida multi-agente:\n"
+               "• Sistema Anfitrión: Windows 11 (C: accesible en /mnt/c)\n"
+               "• Subsistema Nativo: Linux Ubuntu 26.04 LTS en WSL 2 (con Ollama y Python 3.14 integrados)\n"
+               "• Agente: Fronda 1.0 operando con comunicación directa en Linux y renderizado en Windows.")
+        return True, "os_info", res
 
     # 1.1 ¿Qué puedes hacer? / Habilidades y capacidades
     if any(k in text for k in ["qué puedes hacer", "que puedes hacer", "cuales son tus habilidades", "cuáles son tus habilidades", "tus skills", "qué sabes hacer", "que sabes hacer", "capacidades"]):
