@@ -198,4 +198,26 @@ def dispatch_skill_intent(user_text: str) -> tuple[bool, str, str]:
         res = open_system_app(target_app)
         return True, "launch_app", res
 
+    # 7. Ejecutar comando en WSL (Capa 2 Linux)
+    wsl_match = re.search(r"(?:ejecuta\s+en\s+wsl|corre\s+en\s+linux|comando\s+wsl|terminal\s+linux|bash)\s*:\s*(.+)", text, re.IGNORECASE)
+    if not wsl_match:
+        wsl_match = re.search(r"(?:ejecuta|corre)\s+en\s+(?:wsl|linux|ubuntu)\s+(.+)", text, re.IGNORECASE)
+    if wsl_match:
+        cmd = wsl_match.group(1).strip()
+        try:
+            from fronda_bridge import FrondaBridge
+            bridge = FrondaBridge()
+            res = bridge.run_wsl_command(cmd)
+            stdout = res.get("stdout", "")
+            stderr = res.get("stderr", "")
+            code = res.get("exit_code", 0)
+            output = f"Comando ejecutado en WSL (Ubuntu 26.04) [Exit: {code}]:\n"
+            if stdout:
+                output += f"```bash\n{stdout}\n```"
+            if stderr:
+                output += f"\nErrores:\n```bash\n{stderr}\n```"
+            return True, "wsl_command", output
+        except Exception as e:
+            return True, "wsl_command", f"Error al ejecutar en WSL: {e}"
+
     return False, "", ""

@@ -17,11 +17,13 @@ from pathlib import Path
 # Importar módulos propios de Fronda 1.0
 from fronda_memory import memory_manager
 import fronda_skills
+from fronda_bridge import FrondaBridge
 
+bridge       = FrondaBridge()
 VOICE        = "es-ES-AlvaroNeural"
 OLLAMA_API   = "http://127.0.0.1:11434/api/chat"
-MODEL        = "fronda"
-FALLBACK_MODEL = "llama3.2:3b"
+MODEL        = "frondabrick"
+FALLBACK_MODEL = "qwen2.5-coder:1.5b"
 PORT         = 5176
 GUI_FILE     = Path(__file__).parent / "fronda_voice_gui.html"
 
@@ -208,8 +210,8 @@ class FrondaHandler(BaseHTTPRequestHandler):
                 # 1. Evaluar si dispara un Skill directo
                 has_skill, skill_name, skill_result = fronda_skills.dispatch_skill_intent(last_user_text)
                 
-                # Si el skill es una acción de hardware o app (ej: volumen, mute, abrir app), responder de inmediato
-                if has_skill and skill_name in ["telemetry", "volume", "mute", "unmute", "brightness", "screenshot", "launch_app"]:
+                # Si el skill es una acción de hardware o app (ej: volumen, mute, abrir app, comando WSL), responder de inmediato
+                if has_skill and skill_name in ["telemetry", "volume", "mute", "unmute", "brightness", "screenshot", "launch_app", "wsl_command"]:
                     response = skill_result
                 else:
                     # 2. Inyectar contexto dinámico de memoria y/o resultados de búsqueda web/telemetría
