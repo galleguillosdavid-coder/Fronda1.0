@@ -26,9 +26,9 @@ start /B "" wsl.exe -d Ubuntu -e bash -c "nohup /usr/local/bin/ollama serve > ~/
 
 timeout /t 2 /nobreak >nul
 
-:: Iniciar servidor Fronda en segundo plano
-echo [INFO] Inicializando servidor de Fronda 1.0...
-start "Fronda 1.0 Voice Server" python fronda_voice_server.py
+:: Iniciar servidor Fronda de forma nativa en Linux WSL 2
+echo [INFO] Inicializando servidor de Fronda 1.0 en subsistema Linux Ubuntu WSL 2...
+start "Fronda 1.0 WSL Engine" wsl.exe -d Ubuntu -e bash -c "cd /mnt/c/Users/Frondabrick/Desktop/dvd/Fronda/Fronda1.0 && python3 -u fronda_voice_server.py"
 
 :: Esperar a que el servidor arranque
 timeout /t 2 /nobreak >nul

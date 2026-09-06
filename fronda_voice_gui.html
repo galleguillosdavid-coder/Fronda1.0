@@ -603,6 +603,15 @@
       messages.push({ role: 'assistant', content: response });
       setStatus('speaking', 'HABLANDO...');
 
+      // Reproducir voz sintetizada a través del navegador (óptimo para ejecución en WSL)
+      try {
+        const audio = new Audio(`${API}/api/audio?t=${Date.now()}`);
+        audio.play().catch(() => {});
+        audio.onended = () => {
+          if (!isWorking && !micActive) setStatus('', 'EN LÍNEA');
+        };
+      } catch (_) {}
+
       // Recargar memorias y solicitudes en segundo plano
       setTimeout(() => {
         refreshMemory();

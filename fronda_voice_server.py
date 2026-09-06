@@ -32,6 +32,8 @@ _lock         = threading.Lock()
 is_speaking   = False
 is_processing = False
 
+_last_audio_bytes = None
+
 def _stop_audio():
     """Detiene cualquier reproducción de audio en curso."""
     try:
@@ -43,11 +45,10 @@ def _stop_audio():
         pass
 
 def _play_audio_thread(text: str):
-    """Genera y reproduce TTS en un hilo separado no bloqueante."""
-    global is_speaking
+    """Genera audio TTS. Guarda bytes para streaming Web y reproduce localmente si hay mixer disponible."""
+    global is_speaking, _last_audio_bytes
     try:
         import edge_tts
-        import pygame
 
         clean = (text.replace("```", "")
                      .replace("`", "")
@@ -69,16 +70,27 @@ def _play_audio_thread(text: str):
         loop.run_until_complete(comm.save(path))
         loop.close()
 
-        # Reproducir con pygame
-        with _lock:
-            is_speaking = True
+        # Guardar en memoria para el navegador (garantiza audio 100% perfecto desde WSL)
+        try:
+            with open(path, "rb") as af:
+                _last_audio_bytes = af.read()
+        except Exception:
+            pass
 
-        pygame.mixer.init()
-        pygame.mixer.music.load(path)
-        pygame.mixer.music.play()
-        while pygame.mixer.music.get_busy():
-            import time; time.sleep(0.04)
-        pygame.mixer.quit()
+        # Intento de reproducción directa con pygame (si el host WSL tiene dsp/pulseaudio)
+        try:
+            import pygame
+            with _lock:
+                is_speaking = True
+            pygame.mixer.init()
+            pygame.mixer.music.load(path)
+            pygame.mixer.music.play()
+            while pygame.mixer.music.get_busy():
+                import time; time.sleep(0.04)
+            pygame.mixer.quit()
+        except Exception:
+            # En WSL sin dispositivo de audio ALSA/DSP directo, el frontend HTML reproduce el audio vía /api/audio
+            pass
 
     except Exception as e:
         print(f"[Audio Error]: {e}")
@@ -191,6 +203,18 @@ class FrondaHandler(BaseHTTPRequestHandler):
             self._json(200, fronda_skills.get_system_telemetry())
         elif self.path == "/api/skills/requests":
             self._json(200, fronda_skills.get_skill_requests())
+        elif self.path.startswith("/api/audio"):
+            global _last_audio_bytes
+            if _last_audio_bytes:
+                self.send_response(200)
+                self.send_header("Content-Type", "audio/mpeg")
+                self.send_header("Content-Length", str(len(_last_audio_bytes)))
+                self.send_header("Cache-Control", "no-cache")
+                self._cors()
+                self.end_headers()
+                self.wfile.write(_last_audio_bytes)
+            else:
+                self.send_error(404, "No audio synthesized yet")
         else:
             self.send_error(404)
 
@@ -333,7 +357,7 @@ if __name__ == "__main__":
     ).start()
 
     ThreadingHTTPServer.allow_reuse_address = True
-    server = ThreadingHTTPServer(("127.0.0.1", PORT), FrondaHandler)
+    server = ThreadingHTTPServer(("0.0.0.0", PORT), FrondaHandler)
     try:
         server.serve_forever()
     except KeyboardInterrupt:
