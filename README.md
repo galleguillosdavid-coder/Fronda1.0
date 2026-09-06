@@ -24,7 +24,9 @@ Repositorio oficial: [https://github.com/galleguillosdavid-coder/Fronda1.0](http
   - Interfaz web moderna con paleta esmeralda cuántica (`#00ffaa`), cian y obsidiana profunda.
   - Panel deslizante lateral de **Memoria Viva** para visualizar y agregar recuerdos en tiempo real.
   - Soporte de reconocimiento de voz por micrófono (Web Speech API) y voz neural masculina (`es-ES-AlvaroNeural`).
-- **Arquitectura Asíncrona**: Hilos dedicados para reproducción de audio y extracción de memoria sin bloquear el servidor HTTP ni la interfaz.
+- **Arquitectura Asíncrona y Multi-hilo**:
+  - Servidor `ThreadingHTTPServer` que maneja peticiones concurrentes para que las consultas de telemetría y memoria sigan respondiendo mientras Ollama procesa inferencias complejas.
+  - Hilos dedicados independientes para reproducción de voz neural (`edge-tts`) y extracción de memoria en segundo plano sin congelar la interfaz.
 
 ---
 
