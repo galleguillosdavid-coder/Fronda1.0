@@ -322,6 +322,7 @@ if __name__ == "__main__":
         daemon=True
     ).start()
 
+    ThreadingHTTPServer.allow_reuse_address = True
     server = ThreadingHTTPServer(("127.0.0.1", PORT), FrondaHandler)
     try:
         server.serve_forever()
