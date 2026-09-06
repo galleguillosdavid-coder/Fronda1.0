@@ -7,6 +7,7 @@ import sys
 import re
 import json
 import asyncio
+import datetime
 import subprocess
 from pathlib import Path
 
@@ -143,9 +144,18 @@ def dispatch_skill_intent(user_text: str) -> tuple[bool, str, str]:
     Retorna: (fue_skill, nombre_skill, resultado_texto)
     """
     text = user_text.lower().strip()
-    
-    # 1. Telemetría / Diagnóstico
-    if any(k in text for k in ["diagnóstico", "diagnostico", "estado del sistema", "estado del pc", "telemetria", "telemetría", "uso de ram", "uso de cpu"]):
+
+    # 0. Hora y Fecha actual
+    if any(k in text for k in ["qué hora es", "que hora es", "la hora", "dime la hora", "qué día es", "que dia es", "qué fecha es", "que fecha es"]):
+        now = datetime.datetime.now()
+        hora_str = now.strftime("%H:%M")
+        fecha_str = now.strftime("%d/%m/%Y")
+        dias = ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado", "Domingo"]
+        dia_semana = dias[now.weekday()]
+        return True, "time_date", f"Son las {hora_str} del {dia_semana}, {fecha_str}."
+
+    # 1. Telemetría / Diagnóstico / Estado del computador
+    if any(k in text for k in ["diagnóstico", "diagnostico", "estado del sistema", "estado del pc", "estado del computador", "estado del equipo", "telemetria", "telemetría", "uso de ram", "uso de cpu", "cómo está el pc", "como esta el pc", "cómo está la máquina", "como esta la maquina"]):
         data = get_system_telemetry()
         if "error" in data:
             return True, "telemetry", f"Error de diagnóstico: {data['error']}"
@@ -156,6 +166,33 @@ def dispatch_skill_intent(user_text: str) -> tuple[bool, str, str]:
         if "battery_percent" in data:
             res += f"\n• Batería: {data.get('battery_percent')}% ({'Cargando' if data.get('power_plugged') else 'Descarga'})"
         return True, "telemetry", res
+
+    # 1.1 ¿Qué puedes hacer? / Habilidades y capacidades
+    if any(k in text for k in ["qué puedes hacer", "que puedes hacer", "cuales son tus habilidades", "cuáles son tus habilidades", "tus skills", "qué sabes hacer", "que sabes hacer", "capacidades"]):
+        res = ("Como Fronda Brick v0.01 (tu clon digital multi-agente en Windows 11 + WSL 2 Ubuntu), puedo:\n\n"
+               "• Control del Sistema: Ajustar volumen, brillo, silenciar audio y capturar pantallas.\n"
+               "• Diagnóstico de Hardware: Reportar telemetría en tiempo real de CPU, RAM y disco.\n"
+               "• Ejecución Nativa en Linux: Correr cualquier comando en Ubuntu WSL 2 (ej: 'ejecuta en wsl uptime').\n"
+               "• Operaciones de Ingeniería: Revisión y generación de código en Rust, Python y scripts en PowerShell.\n"
+               "• Telecomunicaciones y Redes: Asistencia en arquitectura y diseño de protocolos IPv7 / VPI7.\n"
+               "• Mundo Exterior: Búsqueda web en vivo y extracción de información técnica sin límites.\n"
+               "• Memoria Viva: Aprender incrementalmente tu historia y proyectos en cada interacción.")
+        return True, "skills_summary", res
+
+    # 1.2 Cálculos Matemáticos (raíces, potencias, aritmética)
+    # Raíz cúbica
+    cbrt_match = re.search(r"ra[ií]z\s+c[uú]bica\s+de\s+([0-9]+(?:\.[0-9]+)?)", text)
+    if cbrt_match:
+        val = float(cbrt_match.group(1))
+        calc = round(val ** (1.0 / 3.0), 4)
+        return True, "math_calc", f"La raíz cúbica de {val:g} es aproximadamente {calc}."
+
+    # Raíz cuadrada
+    sqrt_match = re.search(r"ra[ií]z\s+cuadrada\s+de\s+([0-9]+(?:\.[0-9]+)?)", text)
+    if sqrt_match:
+        val = float(sqrt_match.group(1))
+        calc = round(val ** 0.5, 4)
+        return True, "math_calc", f"La raíz cuadrada de {val:g} es {calc}."
 
     # 2. Control de Volumen
     vol_match = re.search(r"(?:pon|ajusta|sube|baja)?\s*(?:el\s+)?volumen\s+(?:a|al)\s+(\d{1,3})%?", text)
