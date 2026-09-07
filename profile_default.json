@@ -1,0 +1,28 @@
+{
+  "profile": {
+    "name": "David Galleguillos",
+    "nickname": "David",
+    "role": "Creador e Ingeniero - Original de Fronda 1.0",
+    "voice_preferred": "es-ES-AlvaroNeural",
+    "mindset": [
+      "Pragmatismo técnico extremo",
+      "Innovación continua sobre bases sólidas",
+      "Excelencia en la ejecución, no solo en el diseño"
+    ],
+    "specialties": [
+      "Arquitecturas de Software Distribuido",
+      "Redes IPv7 y Telecomunicaciones de Nueva Generación",
+      "Inteligencia Artificial y Modelos de Lenguaje",
+      "Desarrollo de Sistemas Embebidos y de Bajo Nivel",
+      "Automatización y DevOps"
+    ],
+    "hardware_specs": {}
+  },
+  "learned_history": [],
+  "acquired_skills": [],
+  "stats": {
+    "total_interactions": 0,
+    "total_memories": 0,
+    "last_interaction": ""
+  }
+}

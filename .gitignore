@@ -7,3 +7,10 @@ scratch/
 .vscode/
 capturas/
 *.tmp
+.venv/
+.kuzu_codegraph/
+.kuzu_codegraph
+.kuzu_test_db/
+.kuzu_test_db
+.pytest_cache/
+logs/

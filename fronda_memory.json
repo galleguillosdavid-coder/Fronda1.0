@@ -21,7 +21,13 @@
       "cpu": "Intel Core i5-1030NG7 (4 núcleos)",
       "ram": "16 GB LPDDR4",
       "graphics": "Intel Iris Plus Graphics",
-      "os": "Windows 11"
+      "os": "Linux",
+      "ram_total_gb": 3.8,
+      "cpu_cores_logical": 4,
+      "cpu_cores_physical": 2,
+      "cpu_name": "Desconocido",
+      "os_version": "#1 SMP PREEMPT_DYNAMIC Thu Jun 18 21:54:43 UTC 2026",
+      "python_version": "3.14.4"
     }
   },
   "learned_history": [
@@ -52,6 +58,27 @@
       "category": "proyectos",
       "content": "David trabaja activamente en el diseño y despliegue de soluciones estructurales para construcción, y en la integración de capas lógicas de redes IPv7.",
       "importance": 4
+    },
+    {
+      "id": "mem_159acb",
+      "timestamp": "2026-09-07T15:34:58",
+      "category": "lugar",
+      "content": "Entidades detectadas en mensaje de David: mira (lugar). Contexto: 'mira mi pantalla'",
+      "importance": 4
+    },
+    {
+      "id": "mem_5eff68",
+      "timestamp": "2026-09-07T16:37:39",
+      "category": "persona",
+      "content": "Entidades detectadas en mensaje de David: Hola Fronda (persona). Contexto: 'Hola Fronda'",
+      "importance": 4
+    },
+    {
+      "id": "mem_1709a2",
+      "timestamp": "2026-09-07T19:14:13",
+      "category": "general",
+      "content": "Entidades detectadas en mensaje de David: Admin (general). Contexto: 'tienes una terminal para ejecutar comandos , tiene privilegios de Admin, que te guastaría tener?'",
+      "importance": 3
     }
   ],
   "acquired_skills": [
@@ -59,11 +86,19 @@
     "Ajuste dinámico de brillo con screen-brightness-control",
     "Búsqueda web en tiempo real sin límites con DuckDuckGo",
     "Captura visual y telemetría de pantalla nativa con Pillow/MSS",
-    "Monitoreo de CPU, memoria y procesos en tiempo real"
+    "Monitoreo de CPU, memoria y procesos en tiempo real",
+    "Visión por computadora multimodal en tiempo real con Moondream 1.4B",
+    "Extracción de entidades nombradas y análisis NLP con spaCy",
+    "Diagnóstico profundo de hardware (CPU, GPU, RAM, Discos, Placa)",
+    "Consulta meteorológica en tiempo real mediante wttr.in",
+    "Generación de grafos cognitivos de memoria con Mermaid y Kùzu",
+    "Lectura y extracción de texto desde documentos PDF con pypdf",
+    "Conversión de formatos de video y audio con ffmpeg",
+    "Cálculo de efemérides patrias chilenas y calendario oficial de feriados"
   ],
   "stats": {
-    "total_interactions": 31,
-    "total_memories": 4,
-    "last_interaction": "2026-09-05T23:48:03"
+    "total_interactions": 91,
+    "total_memories": 7,
+    "last_interaction": "2026-09-07T19:34:30"
   }
 }

@@ -1,0 +1,101 @@
+{
+  "es": {
+    "time_date": [
+      "qué hora es", "que hora es", "la hora", "dime la hora",
+      "qué día es", "que dia es", "qué fecha es", "que fecha es",
+      "dime la fecha", "fecha actual", "hora actual"
+    ],
+    "telemetry": [
+      "diagnóstico", "diagnostico", "estado del sistema", "estado del pc",
+      "estado del computador", "estado del equipo", "telemetria", "telemetría",
+      "uso de ram", "uso de cpu", "cómo está el pc", "como esta el pc",
+      "cómo está la máquina", "como esta la maquina", "rendimiento"
+    ],
+    "os_info": [
+      "sistema operativo", "qué sistema tengo", "que sistema tengo",
+      "qué os tengo", "que os tengo", "versión de windows", "version de windows",
+      "qué linux", "que linux", "kernel", "distribución"
+    ],
+    "skills_summary": [
+      "qué puedes hacer", "que puedes hacer", "cuales son tus habilidades",
+      "cuáles son tus habilidades", "tus skills", "qué sabes hacer",
+      "que sabes hacer", "capacidades", "qué funciones tienes"
+    ],
+    "mute": ["silencia", "mutear", "mutea", "silenciar el audio", "apaga el sonido"],
+    "unmute": ["desmutea", "reactiva el audio", "quitar silencio", "dessilenciar", "activa el audio"],
+    "screenshot": ["captura de pantalla", "toma una captura", "screenshot", "pantallazo"],
+    "wsl_prefix": [
+      "ejecuta en wsl", "corre en linux", "comando wsl", "terminal linux", "bash",
+      "ejecuta en ubuntu", "corre en ubuntu"
+    ],
+    "research_web": [
+      "busca en internet", "busca en la web", "busca en google", "investiga", "averigua", "qué noticias hay de", "que noticias hay de"
+    ],
+    "research_wiki": [
+      "qué es", "que es", "quién es", "quien es", "qué dice wikipedia", "que dice wikipedia", "resumen de", "biografía de", "biografia de"
+    ],
+    "research_github": [
+      "busca en github", "busca el repositorio", "repositorio de", "proyectos de github"
+    ],
+    "hardware_analysis": [
+      "analiza mi computador", "analizar mi computador", "analiza mi pc", "analizar mi pc",
+      "analiza mi equipo", "analizar mi equipo", "especificaciones de mi pc", "especificaciones del computador",
+      "qué computador tengo", "que computador tengo", "hardware de mi pc", "analizar el sistema"
+    ],
+    "weather": [
+      "cómo va estar el clima", "como va estar el clima", "cómo va a estar el clima", "el clima hoy",
+      "pronóstico del tiempo", "pronostico del tiempo", "qué clima hace", "que clima hace", "va a llover"
+    ],
+    "cognitive_graph": [
+      "grafo de tu memoria", "grafo de memoria", "grafo cognitivo", "hazme un grafo",
+      "hazme un grafo de tu memoria cognitiva", "mapa de tu memoria", "estructura cognitiva"
+    ],
+    "pdf_reader": [
+      "leer pdf", "lee el pdf", "lee este pdf", "extraer pdf", "abrir pdf"
+    ],
+    "media_convert": [
+      "convierte este archivo de video", "convertir mkv a mp4", "convertir video", "mkv a mp4"
+    ],
+    "september_18": [
+      "18 de septiembre", "dieciocho de septiembre", "fiestas patrias",
+      "qué se celebra el 18 de septiembre", "que se celebra el 18 de septiembre",
+      "cuánto falta para el 18", "cuanto falta para el 18", "el dieciocho"
+    ],
+    "holidays": [
+      "próximo feriado", "proximo feriado", "cuándo es feriado", "cuando es feriado",
+      "feriados de este año", "calendario de feriados", "qué feriado viene"
+    ],
+    "screen_vision": [
+      "mira mi pantalla", "qué hay en mi pantalla", "que hay en mi pantalla",
+      "analiza lo que estoy viendo", "analiza mi pantalla", "analizar mi pantalla",
+      "lee este error", "qué ves en mi pantalla", "que ves en mi pantalla",
+      "visión de pantalla", "vision de pantalla", "analiza la imagen"
+    ]
+  },
+  "en": {
+    "screen_vision": [
+      "look at my screen", "what is on my screen", "analyze my screen",
+      "read this error", "what do you see on my screen"
+    ],
+    "time_date": [
+      "what time is it", "what's the time", "current time", "tell me the time",
+      "what day is it", "what's the date", "current date"
+    ],
+    "telemetry": [
+      "system diagnostics", "system status", "how is the pc", "cpu usage",
+      "ram usage", "hardware status", "system performance", "telemetry"
+    ],
+    "os_info": [
+      "operating system", "what os do i have", "what linux", "kernel version",
+      "windows version", "what system"
+    ],
+    "skills_summary": [
+      "what can you do", "your skills", "your capabilities", "what do you know",
+      "what are your abilities", "list your skills"
+    ],
+    "mute": ["mute", "silence audio", "turn off sound"],
+    "unmute": ["unmute", "restore audio", "turn on sound"],
+    "screenshot": ["take a screenshot", "screenshot", "screen capture"],
+    "wsl_prefix": ["run in wsl", "execute in linux", "wsl command", "linux terminal"]
+  }
+}

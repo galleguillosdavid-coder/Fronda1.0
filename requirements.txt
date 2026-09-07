@@ -1,0 +1,25 @@
+# ─── Fronda 1.0 — Dependencias Requeridas ────────────────────────────────────
+# Instalar con: pip install -r requirements.txt
+
+# Inferencia y Comunicación con Ollama
+edge-tts>=6.1.9
+
+# Sistema y Hardware
+psutil>=5.9.8
+
+# Búsqueda Web
+duckduckgo-search>=6.1.7
+
+# Control de Audio Windows
+pycaw>=20230407
+comtypes>=1.4.1
+
+# Captura de Pantalla
+mss>=9.0.1
+Pillow>=10.3.0
+
+# Control de Brillo
+screen-brightness-control>=0.23.0
+
+# Audio local (opcional, para reproducción directa sin navegador)
+pygame-ce>=2.4.1

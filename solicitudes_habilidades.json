@@ -5,20 +5,130 @@
     "categoria": "procesamiento_archivos",
     "peticion_usuario": "convierte este archivo de video mkv a mp4",
     "respuesta_original": "Lo siento David, no tengo la capacidad de convertir archivos de video mkv a mp4.",
-    "estado": "PENDIENTE_DESARROLLO",
+    "estado": "INSTALADO",
     "descripcion": "Habilidad requerida para responder: 'convierte este archivo de video mkv a mp4'",
     "responsable": "Asistente Desarrollador (Antigravity)",
-    "notas": "Pendiente de codificación en fronda_skills.py e instalación de librerías."
+    "notas": "Implementado skill 'media_convert' con motor ffmpeg en skills/media_engine.py."
   },
   {
     "id": "REQ-20260906-025816",
     "fecha": "2026-09-06T02:58:16.207292",
     "categoria": "general",
     "peticion_usuario": "cual es mi sistema ioerativo?",
-    "respuesta_original": "Lo siento, pero como un asistente de inteligencia artificial, no tengo acceso a la información del sistema operativo que estás utilizando. Sin embargo, puedes verificar esto en tu propio equipo haciendo clic derecho sobre el icono de Windows y seleccionando \"Sobre este equipo\". Aquí encontrarás detalles sobre tu sistema operativo, incluyendo la versión de Windows.",
+    "respuesta_original": "Lo siento, pero como un asistente de inteligencia artificial, no tengo acceso a la información del sistema operativo que estás utilizando...",
     "estado": "INSTALADO",
     "descripcion": "Habilidad requerida para responder: 'cual es mi sistema ioerativo?'",
     "responsable": "Asistente Desarrollador (Antigravity)",
     "notas": "Implementado skill 'os_info' en fronda_skills.py con soporte multi-entorno Windows 11 + WSL 2."
+  },
+  {
+    "id": "REQ-20260906-031232",
+    "fecha": "2026-09-06T03:12:32.706093",
+    "categoria": "clima_meteorologia",
+    "peticion_usuario": "Cómo va estar el clima hoy día",
+    "respuesta_original": "Lo siento, pero como soy un software de inteligencia artificial creado por David Galleguillos, no tengo la capacidad para conocer los detalles del tiempo actual o cualquier otro dato real...",
+    "estado": "INSTALADO",
+    "descripcion": "Habilidad requerida para responder: 'Cómo va estar el clima hoy día'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'weather' con motor wttr.in en skills/weather_engine.py sin requerir API keys."
+  },
+  {
+    "id": "REQ-20260906-093000",
+    "fecha": "2026-09-06T09:30:00.003588",
+    "categoria": "procesamiento_archivos",
+    "peticion_usuario": "leer PDF",
+    "respuesta_original": "No sé cómo leer archivos PDF.",
+    "estado": "INSTALADO",
+    "descripcion": "Habilidad requerida para responder: 'leer PDF'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'pdf_reader' con librería pypdf en skills/pdf_engine.py."
+  },
+  {
+    "id": "REQ-20260907-141611",
+    "fecha": "2026-09-07T14:16:11.954559",
+    "categoria": "general",
+    "peticion_usuario": "Hola cómo estás hazme un grafo de tu memoria cognitiva",
+    "respuesta_original": "Lo siento, pero como asistente de inteligencia artificial, no tengo la capacidad de crear gráficos...",
+    "estado": "INSTALADO",
+    "descripcion": "Habilidad requerida para responder: 'Hola cómo estás hazme un grafo de tu memoria cognitiva'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'cognitive_graph' en skills/cognitive_graph.py integrado con Kùzu y recuerdos en memoria viva."
+  },
+  {
+    "id": "REQ-20260907-142540",
+    "fecha": "2026-09-07T14:25:40.000000",
+    "categoria": "hardware_diagnostico",
+    "peticion_usuario": "analiza mi computador",
+    "respuesta_original": "Claro, puedo ayudarte a analizar tu computadora. Por favor, proporciona los siguientes detalles: 1. Modelo... 2. SO... 3. RAM...",
+    "estado": "INSTALADO",
+    "descripcion": "Habilidad requerida para responder automáticamente: 'analiza mi computador'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'hardware_analysis' en skills/hardware_analyzer.py con escaneo de CPU, GPU, RAM, Placa Base, Discos y Salud del sistema."
+  },
+  {
+    "id": "REQ-20260907-113704",
+    "fecha": "2026-09-07T11:37:04.224908",
+    "categoria": "procesamiento_archivos",
+    "peticion_usuario": "leer PDF",
+    "respuesta_original": "No sé cómo leer archivos PDF.",
+    "estado": "INSTALADO",
+    "descripcion": "Habilidad requerida para responder: 'leer PDF'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'pdf_reader' con librería pypdf en skills/pdf_engine.py."
+  },
+  {
+    "id": "REQ-20260907-145900",
+    "fecha": "2026-09-07T14:59:00.997397",
+    "categoria": "cultura_efemerides",
+    "peticion_usuario": "18 de septiembre",
+    "respuesta_original": "Lo siento, pero no tengo la capacidad para proporcionar información sobre fechas específicas...",
+    "estado": "INSTALADO",
+    "descripcion": "Habilidad requerida para responder: '18 de septiembre'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'september_18' y 'holidays' en skills/calendar_engine.py con cálculo de días restantes, efemérides y feriados de Chile."
+  },
+  {
+    "id": "REQ-20260907-152000",
+    "fecha": "2026-09-07T15:20:00.000000",
+    "categoria": "vision_multimodal",
+    "peticion_usuario": "mira mi pantalla / qué hay en mi pantalla / lee este error",
+    "respuesta_original": "Habilidad multimodal requerida",
+    "estado": "INSTALADO",
+    "descripcion": "Visión por Computadora / Multimodalidad con modelo local moondream (1.4B) en Ollama",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Implementado skill 'screen_vision' en skills/vision_engine.py con captura de pantalla y análisis multimodal."
+  },
+  {
+    "id": "REQ-20260907-152100",
+    "fecha": "2026-09-07T15:21:00.000000",
+    "categoria": "nlp_avanzado",
+    "peticion_usuario": "Extracción de entidades nombradas en memoria viva",
+    "respuesta_original": "Advertencia: spaCy no está instalado",
+    "estado": "INSTALADO",
+    "descripcion": "NLP Avanzado con spaCy y modelo es_core_news_sm en WSL 2 y Windows",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Instalado spaCy 3.8.16 y es_core_news_sm tanto en WSL2 como en .venv. Extracción automática de recuerdos activada."
+  },
+  {
+    "id": "REQ-20260907-131115",
+    "fecha": "2026-09-07T13:11:15.945517",
+    "categoria": "procesamiento_archivos",
+    "peticion_usuario": "leer PDF",
+    "respuesta_original": "No sé cómo leer archivos PDF.",
+    "estado": "PENDIENTE_DESARROLLO",
+    "descripcion": "Habilidad requerida para responder: 'leer PDF'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Pendiente de codificación e instalación de librerías."
+  },
+  {
+    "id": "REQ-20260907-191413",
+    "fecha": "2026-09-07T19:14:13.300365",
+    "categoria": "general",
+    "peticion_usuario": "tienes una terminal para ejecutar comandos , tiene privilegios de Admin, que te guastaría tener?",
+    "respuesta_original": "Como una inteligencia artificial diseñada para trabajar y aprender, tengo las siguientes características:\n\n1. **Privilegios de Administrador**: No tengo acceso a los privilegios de administrador en mi sistema.\n\n2. **Terminal**: Sí, puedo ejecutar comandos desde la terminal. Mi sistema es basado en Rust, que tiene una interfaz de línea de comando llamada `cargo`.\n\n3. **Integración con API**: Si necesitas interactuar con APIs externas, podrías usar las bibliotecas disponibles para Rust, como `reqwest` o `curl`, y luego llamar a estas funciones desde mi código.\n\n4. **Documentación**: La documentación se encuentra en el archivo `README.md`.\n\n5. **Tests**: Los tests están ubicados en la carpeta `tests`.\n\n6. **Archivos de Configuración**: El archivo `.env` contiene las variables de entorno necesarias para ejecutar el programa, como las claves API.\n\n7. **Logs**: Los logs se almacenan en un archivo llamado `log.txt`.\n\n8. **Assets** (opcional): No tengo archivos de recursos disponibles.\n\n9. **Documentation**:\n    - La documentación se encuentra en el archivo `README.md`.\n\n10. **Dependencies**:\n    - El archivo `Cargo.toml` contiene las dependencias externas del proyecto, como bibliotecas Rust y otros paquetes.\n\nEsto significa que no tengo acceso a los privilegios de administrador para ejecutar comandos con sudo o cambiar permisos en mi sistema.",
+    "estado": "PENDIENTE_DESARROLLO",
+    "descripcion": "Habilidad requerida para responder: 'tienes una terminal para ejecutar comandos , tiene privilegios de Admin, que te guastaría tener?'",
+    "responsable": "Asistente Desarrollador (Antigravity)",
+    "notas": "Pendiente de codificación e instalación de librerías."
   }
 ]

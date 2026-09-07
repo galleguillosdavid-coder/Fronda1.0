@@ -1,0 +1,19 @@
+# ─── Fronda 1.0 — Dependencias Opcionales ────────────────────────────────────
+# Instalar con: pip install -r requirements-optional.txt
+# Solo necesarias para funcionalidades específicas.
+
+# NLP avanzado para extracción de memorias (C17)
+# Instalar: pip install spacy && python -m spacy download es_core_news_sm
+spacy>=3.7.4
+
+# Automatización GUI del sistema operativo
+pyautogui>=0.9.54
+
+# OCR de capturas de pantalla
+pytesseract>=0.3.10
+opencv-python>=4.9.0.80
+
+# Scraping y descarga de páginas web
+beautifulsoup4>=4.12.3
+aiohttp>=3.9.5
+playwright>=1.44.0

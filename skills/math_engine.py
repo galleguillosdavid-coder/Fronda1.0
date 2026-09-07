@@ -40,6 +40,12 @@ def evaluate_math_expression(expr_str: str) -> Tuple[bool, str]:
             return _eval_node(node.body)
         elif isinstance(node, ast.Constant) and isinstance(node.value, (int, float)):
             return node.value
+        elif isinstance(node, ast.Name):
+            # Constantes matemáticas: pi, e, tau
+            val = SAFE_MATH_OPERATORS.get(node.id)
+            if isinstance(val, (int, float)):
+                return val
+            raise ValueError(f"Nombre no permitido: {node.id}")
         elif isinstance(node, ast.UnaryOp):
             val = _eval_node(node.operand)
             if isinstance(node.op, ast.UAdd): return +val

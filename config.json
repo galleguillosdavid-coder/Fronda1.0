@@ -1,0 +1,50 @@
+{
+  "ollama": {
+    "url": "http://127.0.0.1:11434",
+    "default_model": "frondabrick",
+    "fallback_model": "qwen2.5-coder:1.5b",
+    "timeout": 120,
+    "options": {
+      "temperature": 0.3,
+      "num_ctx": 2048,
+      "num_predict": 512,
+      "repeat_penalty": 1.15
+    }
+  },
+  "server": {
+    "host": "0.0.0.0",
+    "port": 5176,
+    "allowed_origins": "*",
+    "max_body_bytes": 1048576,
+    "auth_token": "",
+    "rate_limit_per_sec": 10
+  },
+  "audio": {
+    "voice": "es-ES-AlvaroNeural",
+    "tts_rate": "+4%",
+    "tts_pitch": "-1Hz"
+  },
+  "paths": {
+    "memory_file": "fronda_memory.json",
+    "skills_requests_file": "solicitudes_habilidades.json",
+    "gui_file": "fronda_voice_gui.html",
+    "logs_dir": "logs",
+    "captures_dir": "capturas",
+    "profile_default_file": "profile_default.json"
+  },
+  "wsl": {
+    "distro": "",
+    "enabled": true,
+    "allowed_commands_blacklist": [
+      "rm -rf", "mkfs", "dd if=", ":(){:|:&};:", "shutdown", "halt", "reboot"
+    ]
+  },
+  "user": {
+    "name": "David Galleguillos",
+    "nickname": "David",
+    "cpu_threads": 4,
+    "cpu_headroom_target_percent": 15,
+    "dispatcher_lang": "es",
+    "welcome_message": "Fronda 1.0 inicializado. Clon digital en línea con memoria y skills activos. ¿En qué trabajamos hoy?"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "codegraph-memory": {
+      "command": "c:/Users/Frondabrick/Desktop/dvd/Fronda/Fronda1.0/.venv/Scripts/python.exe",
+      "args": [
+        "-m",
+        "core.codegraph.mcp_server",
+        "c:/Users/Frondabrick/Desktop/dvd/Fronda/Fronda1.0"
+      ],
+      "env": {
+        "PYTHONIOENCODING": "utf-8"
+      }
+    }
+  }
+}

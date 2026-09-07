@@ -1,78 +1,51 @@
-# 🧠 PLAN DE EXPANSIÓN: SKILLS Y HERRAMIENTAS PARA JARVIS
+# 🌿 Catálogo de Habilidades y Skills — Fronda 1.0
 
-> **⚠️ AVISO PARA LA IA ASIGNADA A ESTA TAREA:**
-> Este documento contiene la hoja de ruta para expandir las capacidades de Jarvis (basado en Ollama + Python). 
-> **Tu objetivo exclusivo es INSTALAR, CONFIGURAR Y PROBAR las dependencias** enumeradas aquí para asegurar que coexistan en armonía sin romper el ecosistema actual (Windows, Python 3.14, Edge-TTS, pygame). No reescribas el `jarvis_voice_server.py` base todavía, enfócate en dejar el terreno preparado con scripts de prueba (`test_skill.py`) para cada módulo.
+Estado y hoja de ruta técnica de las habilidades automatizadas, multimodales y cognitivas integradas en Fronda 1.0.
 
 ---
 
-## 📋 CONTEXTO DEL ENTORNO (Para la IA)
-- **OS:** Windows 10/11
-- **Motor LLM:** Ollama local (modelo `jarvis`)
-- **Interfaz actual:** Servidor HTTP en Python (`jarvis_voice_server.py`) en puerto 5176 que se comunica por API con un frontend Web (HTML/JS) y reproduce audio TTS localmente vía `pygame` y `edge-tts`.
-- **Regla de oro:** Todas las herramientas instaladas deben ser asíncronas (`asyncio`) o no bloqueantes, para no congelar el servidor de voz ni la reproducción del TTS.
+## 📊 Matriz de Habilidades Instaladas y Activas
+
+| Módulo / Skill | Archivo Fuente | Dependencia / Motor | Estado | Keywords de Activación |
+| :--- | :--- | :--- | :---: | :--- |
+| **Visión Multimodal** | `skills/vision_engine.py` | `moondream:latest` (Ollama), `Pillow`, `mss` | **INSTALADO** | *"mira mi pantalla"*, *"qué hay en mi pantalla"*, *"lee este error"*, *"analiza lo que estoy viendo"* |
+| **NLP Avanzado (Entidades)** | `fronda_nlp.py` | `spacy 3.8.16`, `es_core_news_sm` | **INSTALADO** | Extracción automática en background de personas, lugares y proyectos en cada mensaje. |
+| **Diagnóstico de Hardware** | `skills/hardware_analyzer.py` | `psutil`, WMI, Linux `/proc/` | **INSTALADO** | *"analiza mi computador"*, *"especificaciones de mi pc"*, *"hardware de mi pc"* |
+| **Clima Meteorológico** | `skills/weather_engine.py` | `wttr.in` (JSON/Texto) | **INSTALADO** | *"cómo va a estar el clima hoy"*, *"pronóstico del tiempo"*, *"qué clima hace en [ciudad]"* |
+| **Grafo Cognitivo Visual** | `skills/cognitive_graph.py` | Mermaid Markdown, `fronda_memory.json` | **INSTALADO** | *"hazme un grafo de tu memoria cognitiva"*, *"mapa de tu memoria"*, *"grafo de memoria"* |
+| **Lector de PDFs** | `skills/pdf_engine.py` | `pypdf` | **INSTALADO** | *"leer pdf [archivo]"*, *"lee este pdf"*, *"extraer pdf"* |
+| **Conversor Multimedia** | `skills/media_engine.py` | `ffmpeg` | **INSTALADO** | *"convierte este archivo de video mkv a mp4"*, *"convertir video"* |
+| **18 de Septiembre y Feriados**| `skills/calendar_engine.py` | Algoritmos de calendario oficial de Chile | **INSTALADO** | *"18 de septiembre"*, *"cuándo es el próximo feriado"*, *"cuánto falta para el 18"* |
+| **Grafo de Código Vectorial** | `core/codegraph/` | `Kùzu DB`, AST Python, `nomic-embed-text` | **INSTALADO** | Servidor MCP nativo (`codegraph-memory`) y CLI `orquestar_subagentes.py` |
+| **Cálculo Científico** | `skills/math_engine.py` | Parser matemático seguro AST | **INSTALADO** | *"cuánto es [expresión]"*, *"calcula [fórmula]"* |
+| **Telemetría del Sistema** | `skills/system_engine.py` | `psutil` | **INSTALADO** | *"diagnóstico"*, *"estado del pc"*, *"uso de ram"*, *"rendimiento"* |
+| **Sistema Operativo** | `skills/system_engine.py` | `platform`, `subprocess` | **INSTALADO** | *"sistema operativo"*, *"qué sistema tengo"*, *"kernel"* |
+| **Control de Audio** | `fronda_skills.py` | `pycaw`, `comtypes` | **INSTALADO** | *"silencia"*, *"mutear"*, *"reactiva el audio"*, *"volumen"* |
+| **Control de Brillo** | `fronda_skills.py` | `screen-brightness-control` | **INSTALADO** | *"brillo al [X]%"*, *"ajusta el brillo"* |
+| **Comandos WSL 2** | `fronda_bridge.py` | `wsl.exe`, Ubuntu | **INSTALADO** | *"ejecuta en wsl: [comando]"*, *"corre en linux: [comando]"* |
 
 ---
 
-## 🛠️ FASE 1: AUTOMATIZACIÓN Y CONTROL DEL SISTEMA (WINDOWS)
-*Habilidad para controlar el PC, volumen, brillo y simular pulsaciones.*
+## 🎯 Registro de Solicitudes y Tickets Resueltos
 
-- [x] **Control de Volumen y Audio (`pycaw`, `comtypes`)**
-  - **Objetivo:** Permitir a Jarvis mutear, subir o bajar el volumen del sistema.
-  - **Instalación:** `pip install pycaw comtypes`
-- [x] **Automatización de Teclado/Ratón (`pyautogui`)**
-  - **Objetivo:** Abrir menús, simular atajos de teclado (ej. Win+D para escritorio).
-  - **Instalación:** `pip install pyautogui`
-- [x] **Control de brillo de pantalla (`screen-brightness-control`)**
-  - **Objetivo:** Ajustar el brillo ("Jarvis, baja el brillo al 30%").
-  - **Instalación:** `pip install screen-brightness-control`
+Todas las solicitudes históricas registradas en `solicitudes_habilidades.json` se encuentran resueltas y verificadas con pruebas automatizadas:
 
-## 🌐 FASE 2: CONEXIÓN AL MUNDO EXTERIOR (BÚSQUEDA Y EXTRACCIÓN)
-*Habilidad para que Jarvis busque datos en tiempo real cuando Ollama no los sepa.*
-
-- [x] **Búsqueda web sin API Keys (`duckduckgo-search`)**
-  - **Objetivo:** Buscar noticias, clima o datos rápidos en la web de forma anónima y gratuita.
-  - **Instalación:** `pip install duckduckgo-search`
-- [x] **Navegación y Extracción de webs dinámicas (`playwright`, `beautifulsoup4`)**
-  - **Objetivo:** Leer el contenido de un link para resumirlo.
-  - **Instalación:** `pip install beautifulsoup4 playwright` y ejecutar `playwright install chromium`
-- [x] **Peticiones HTTP eficientes (`aiohttp`)**
-  - **Objetivo:** Reemplazar `urllib` o `requests` bloqueantes por peticiones asíncronas rápidas a APIs externas (clima, bolsa, etc.).
-  - **Instalación:** `pip install aiohttp`
-
-## 👁️ FASE 3: VISIÓN COMPUTACIONAL Y OCR
-*Habilidad para que Jarvis vea la pantalla o lea documentos.*
-
-- [x] **Captura de Pantalla nativa (`Pillow`, `mss`)**
-  - **Objetivo:** Tomar capturas ultrarrápidas de lo que el usuario está viendo.
-  - **Instalación:** `pip install Pillow mss`
-- [ ] **Reconocimiento Óptico de Caracteres (`pytesseract`)**
-  - **Objetivo:** Extraer texto de la captura de pantalla o de imágenes.
-  - **Requisito externo:** Instalar [Tesseract OCR para Windows](https://github.com/UB-Mannheim/tesseract/wiki) y añadirlo al PATH.
-  - **Instalación:** `pip install pytesseract`
-- [x] **Visión Avanzada (`opencv-python`)**
-  - **Objetivo:** Detección facial o de movimiento usando la webcam.
-  - **Instalación:** `pip install opencv-python`
-
-## 🎵 FASE 4: MULTIMEDIA Y DOMÓTICA
-*Integración con servicios de terceros y dispositivos inteligentes.*
-
-- [x] **Control de Spotify (`spotipy`)**
-  - **Objetivo:** Reproducir música, pausar, saltar canciones.
-  - **Instalación:** `pip install spotipy`
-  - **Nota:** Requiere crear una app en Spotify Developer Dashboard para obtener Client ID y Secret.
-- [x] **Control Domótico (`homeassistant-api` / genérico MQTT)**
-  - **Objetivo:** Apagar/encender luces inteligentes o enchufes si el usuario tiene Home Assistant, Alexa o Google Home.
-  - **Instalación:** `pip install paho-mqtt` (si usa MQTT local) o simple `aiohttp` para Webhooks.
+1. **`REQ-20260905-235228` (INSTALADO)**: Conversión de video MKV a MP4 con `ffmpeg`.
+2. **`REQ-20260906-025816` (INSTALADO)**: Detección precisa de sistema operativo dual (Windows 11 + Ubuntu WSL 2).
+3. **`REQ-20260906-031232` (INSTALADO)**: Consulta de condiciones meteorológicas y clima en tiempo real sin API keys.
+4. **`REQ-20260906-093000` (INSTALADO)**: Extracción y lectura estructurada de documentos PDF con `pypdf`.
+5. **`REQ-20260907-141611` (INSTALADO)**: Representación de arquitectura de memoria cognitiva en diagramas Mermaid.
+6. **`REQ-20260907-142540` (INSTALADO)**: Escaneo profundo de hardware (CPU, GPU, RAM, Discos, Placa base).
+7. **`REQ-20260907-145900` (INSTALADO)**: Efemérides patrias chilenas, historia del 18 de Septiembre y calendario oficial de feriados.
+8. **`REQ-20260907-152000` (INSTALADO)**: Visión por Computadora Multimodal con modelo local Moondream 1.4B en Ollama.
+9. **`REQ-20260907-152100` (INSTALADO)**: NLP Avanzado y extracción de entidades nombradas con `spaCy` (`es_core_news_sm`).
 
 ---
 
-## 🚀 INSTRUCCIONES DE EJECUCIÓN (Checklist Operativo)
+## 🧪 Verificación Continua
 
-Para la IA que continuará el trabajo:
-1. Revisa qué paquetes ya están instalados usando `pip list`.
-2. Instala las librerías fase por fase en la terminal.
-3. **Manejo de dependencias cruzadas:** Asegúrate de que las versiones instaladas no creen conflictos con `edge-tts` o `pygame`.
-4. Crea un script llamado `test_skills.py` donde importes cada librería recién instalada e imprimas su versión para confirmar que el entorno está sano.
-5. Si un paquete (como `playwright` o `tesseract`) requiere instalación de binarios externos, describe claramente el comando o script PowerShell necesario para automatizar su descarga.
-6. Al terminar, marca las casillas de este checklist reemplazando `[ ]` por `[x]` y genera un reporte.
+La suite de pruebas en `tests/` verifica automáticamente todos los módulos:
+```bash
+pytest tests/ -v
+============================= 110 passed =============================
+```

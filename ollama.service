@@ -1,0 +1,24 @@
+[Unit]
+Description=Ollama Service
+After=network-online.target
+
+[Service]
+Type=simple
+ExecStart=/usr/local/bin/ollama serve
+User=frondabrick
+Group=frondabrick
+Restart=always
+RestartSec=3
+KillMode=process
+TimeoutStartSec=infinity
+TimeoutStopSec=infinity
+LimitNOFILE=65536
+Environment="OLLAMA_LOAD_TIMEOUT=60m"
+Environment="OLLAMA_KEEP_ALIVE=-1"
+Environment="OLLAMA_HOST=0.0.0.0:11434"
+Environment="OLLAMA_MODELS=/home/frondabrick/.ollama/models"
+Environment="OLLAMA_NUM_PARALLEL=1"
+Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+
+[Install]
+WantedBy=default.target

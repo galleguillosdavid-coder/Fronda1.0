@@ -426,6 +426,202 @@
       font-size: 12px;
       outline: none;
     }
+    /* Sparklines */
+    .sparkline {
+      width: 60px; height: 20px;
+      display: inline-block; vertical-align: middle;
+      margin-left: 6px; opacity: 0.8;
+    }
+    /* Ticket actions */
+    .ticket-actions { display: flex; gap: 6px; margin-top: 8px; }
+    .ticket-btn {
+      font-size: 11px; padding: 3px 10px; border-radius: 4px; cursor: pointer;
+      border: 1px solid; background: transparent; font-family: 'Fira Code', monospace;
+    }
+    .ticket-btn.install { border-color: var(--emerald); color: var(--emerald); }
+    .ticket-btn.install:hover { background: rgba(0,255,170,0.12); }
+    .ticket-btn.del { border-color: #ef4444; color: #ef4444; }
+    .ticket-btn.del:hover { background: rgba(239,68,68,0.12); }
+    /* Filtros de tickets */
+    .req-filter { display: flex; gap: 6px; margin-bottom: 10px; }
+    .req-filter button {
+      font-size: 11px; padding: 3px 10px; border-radius: 12px; cursor: pointer;
+      border: 1px solid var(--border); background: transparent; color: var(--muted);
+      font-family: 'Rajdhani', sans-serif;
+    }
+    .req-filter button.active { background: rgba(0,255,170,0.15); border-color: var(--emerald); color: var(--emerald); }
+
+    /* ── Siri Waveform Visualizer ── */
+    #waveform-wrap {
+      position: relative;
+      width: 100%;
+      height: 48px;
+      margin-bottom: 8px;
+      border-radius: 10px;
+      background: rgba(5, 12, 22, 0.7);
+      border: 1px solid rgba(0, 255, 170, 0.18);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(8px);
+      box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.6);
+    }
+    #siri-wave {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      display: block;
+    }
+    #waveform-status-label {
+      position: absolute;
+      top: 4px; left: 12px;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 8px;
+      letter-spacing: 2px;
+      color: var(--muted);
+      pointer-events: none;
+      opacity: 0.75;
+      transition: color 0.3s;
+    }
+
+    /* ── Pensamiento Interno & Telemetría Cognitiva ── */
+    .thought-bubble {
+      margin-bottom: 10px;
+      background: rgba(139, 92, 246, 0.08);
+      border: 1px solid rgba(139, 92, 246, 0.32);
+      border-radius: 8px;
+      padding: 8px 12px;
+      font-size: 13px;
+      color: #ddd6fe;
+      transition: all 0.3s ease;
+    }
+    .thought-bubble summary {
+      cursor: pointer;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #c4b5fd;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      user-select: none;
+      outline: none;
+    }
+    .thought-bubble summary:hover {
+      color: #e9d5ff;
+    }
+    .thought-bubble[open] summary {
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+      padding-bottom: 4px;
+    }
+    .thought-content {
+      font-family: 'Fira Code', monospace;
+      font-size: 11px;
+      line-height: 1.5;
+      color: #e2e8f5;
+    }
+    .thought-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 6px;
+      padding-top: 6px;
+      border-top: 1px dashed rgba(139, 92, 246, 0.2);
+      font-size: 10px;
+      color: var(--muted);
+    }
+    .thought-meta span b {
+      color: var(--emerald);
+    }
+
+    /* ── Bloques de Comando y Terminal Embebido ── */
+    .cmd-card {
+      margin: 10px 0;
+      border: 1px solid rgba(0, 229, 255, 0.35);
+      background: rgba(4, 9, 18, 0.95);
+      border-radius: 8px;
+      overflow: hidden;
+      font-family: 'Fira Code', monospace;
+    }
+    .cmd-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(0, 229, 255, 0.08);
+      padding: 6px 12px;
+      border-bottom: 1px solid rgba(0, 229, 255, 0.2);
+      font-size: 11px;
+      color: var(--cyan);
+    }
+    .cmd-actions {
+      display: flex;
+      gap: 6px;
+    }
+    .cmd-btn {
+      padding: 3px 8px;
+      font-size: 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border);
+      background: var(--bg-panel);
+      color: var(--text);
+      cursor: pointer;
+      font-family: 'Fira Code', monospace;
+      transition: all 0.2s;
+    }
+    .cmd-btn:hover {
+      border-color: var(--cyan);
+      background: rgba(0, 229, 255, 0.15);
+      color: #fff;
+    }
+    .cmd-btn.admin {
+      border-color: #f59e0b;
+      color: #f59e0b;
+    }
+    .cmd-btn.admin:hover {
+      background: rgba(245, 158, 11, 0.2);
+      border-color: #fbbf24;
+      color: #fbbf24;
+    }
+    .cmd-code {
+      padding: 10px 12px;
+      font-size: 12px;
+      color: #00ffaa;
+      white-space: pre-wrap;
+      word-break: break-all;
+      background: rgba(0,0,0,0.3);
+    }
+    .cmd-terminal-output {
+      display: none;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      background: #020408;
+      padding: 8px 12px;
+      font-size: 11px;
+      line-height: 1.4;
+      max-height: 200px;
+      overflow-y: auto;
+      white-space: pre-wrap;
+    }
+    .cmd-terminal-output.visible {
+      display: block;
+    }
+    .cmd-terminal-output.success {
+      color: #86efac;
+    }
+    .cmd-terminal-output.error {
+      color: #fca5a5;
+    }
+    .inline-code {
+      background: rgba(0, 255, 170, 0.12);
+      border: 1px solid rgba(0, 255, 170, 0.25);
+      color: var(--emerald);
+      padding: 1px 4px;
+      border-radius: 4px;
+      font-family: 'Fira Code', monospace;
+      font-size: 0.9em;
+    }
   </style>
 </head>
 <body>
@@ -450,19 +646,28 @@
     </div>
   </header>
 
-  <!-- ── Telemetría Rápida ── -->
+  <!-- ── Telemetría Rápida con Sparklines ── -->
   <div id="telemetry-bar">
-    <div class="telem-item">CPU: <span id="telem-cpu">--%</span></div>
-    <div class="telem-item">RAM: <span id="telem-ram">-- GB</span></div>
+    <div class="telem-item">CPU: <span id="telem-cpu">--%</span>
+      <svg id="spark-cpu" class="sparkline" viewBox="0 0 60 20" preserveAspectRatio="none"><polyline id="spark-cpu-line" points="" fill="none" stroke="#00ffaa" stroke-width="1.5"/></svg>
+    </div>
+    <div class="telem-item">RAM: <span id="telem-ram">-- GB</span>
+      <svg id="spark-ram" class="sparkline" viewBox="0 0 60 20" preserveAspectRatio="none"><polyline id="spark-ram-line" points="" fill="none" stroke="#00e5ff" stroke-width="1.5"/></svg>
+    </div>
     <div class="telem-item">DISCO: <span id="telem-disk">-- GB LIBRES</span></div>
     <div class="telem-item">RECUERDOS: <span id="telem-mems">--</span></div>
+    <div class="telem-item" id="telem-alert" style="display:none;color:#ef4444;font-weight:700;"></div>
   </div>
 
   <!-- ── Chat ── -->
   <div id="chat"></div>
 
-  <!-- ── Input ── -->
+  <!-- ── Input y Siri Waveform ── -->
   <div id="input-area">
+    <div id="waveform-wrap">
+      <canvas id="siri-wave"></canvas>
+      <div id="waveform-status-label">FRONDA BIOMETRIC HUD // LISTO</div>
+    </div>
     <div id="input-row">
       <button class="btn" id="btn-mic" title="Hablar por micrófono">🎤</button>
       <textarea id="user-input" rows="1" placeholder="Escribe a Fronda 1.0 o usa el micrófono..."></textarea>
@@ -501,6 +706,11 @@
 
   <div id="tab-content-requests" style="display: none; flex: 1; flex-direction: column;">
     <p style="font-size: 12px; color: var(--muted); margin-bottom: 10px;">Habilidades que Fronda no pudo responder y fueron enviadas como ticket a <b>Antigravity</b> para ser programadas e instaladas.</p>
+    <div class="req-filter">
+      <button id="req-filter-all" class="active" onclick="setReqFilter('all',this)">TODOS</button>
+      <button id="req-filter-pending" onclick="setReqFilter('PENDIENTE_DESARROLLO',this)">⏳ PENDIENTES</button>
+      <button id="req-filter-installed" onclick="setReqFilter('INSTALADO',this)">✅ INSTALADOS</button>
+    </div>
     <div id="requests-list" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 10px;">
       <div style="color: var(--muted); font-size: 13px;">No hay solicitudes pendientes.</div>
     </div>
@@ -508,7 +718,8 @@
 </div>
 
 <script>
-  const API = 'http://127.0.0.1:5176';
+  // URL relativa al origen — funciona en cualquier host/puerto
+  const API = window.location.origin;
   const chat        = document.getElementById('chat');
   const input       = document.getElementById('user-input');
   const btnSend     = document.getElementById('btn-send');
@@ -521,17 +732,240 @@
   const btnCloseMem = document.getElementById('btn-close-memory');
   const memoryList  = document.getElementById('memory-list');
 
-  let messages  = [];
-  let isWorking = false;
-  let recognizer = null;
-  let micActive  = false;
+  let messages     = [];
+  let isWorking    = false;
+  let recognizer   = null;
+  let micActive    = false;
+  let pollFailures = 0;
+  const MAX_POLL_FAILURES = 5;
+
+  // ── Preferencias en localStorage ──
+  const PREF_MODEL   = localStorage.getItem('fronda_model')   || '';
+  const PREF_DRAWER  = localStorage.getItem('fronda_drawer')  === 'open';
+
+  // ── Configuración dinámica desde /api/config ──
+  let frondaConfig = {};
+  async function loadConfig() {
+    try {
+      const res = await fetch(`${API}/api/config`);
+      if (!res.ok) return;
+      frondaConfig = await res.json();
+      // Restaurar modelo guardado en localStorage si está disponible
+      if (PREF_MODEL && frondaConfig.available_models?.includes(PREF_MODEL)) {
+        currentModel = PREF_MODEL;
+      } else {
+        currentModel = frondaConfig.default_model || 'frondabrick';
+      }
+      // Actualizar label del botón de modo
+      _updateModelBtn();
+    } catch (_) {}
+  }
+  loadConfig();
 
   function setStatus(state, text) {
     statusBadge.className = state;
     statusText.textContent = text;
   }
 
-  function addMessage(role, text, skill = null, isTyping = false) {
+  // ── Renderizado de Pensamiento Interno ──
+  function renderThoughtBubble(thought) {
+    if (!thought) return '';
+    const cpuClass = (thought.cpu_headroom < 15) ? 'style="color:#ef4444"' : 'style="color:#00ffaa"';
+    const memsCount = thought.memories ? thought.memories.length : 0;
+    return `
+      <details class="thought-bubble">
+        <summary>🧠 PENSAMIENTO INTERNO &amp; TELEMETRÍA COGNITIVA</summary>
+        <div class="thought-content">
+          <div class="thought-reasoning">${escapeHtml(thought.reasoning || 'Evaluación de contexto y generación cognitiva.')}</div>
+          <div class="thought-meta">
+            <span>Intención: <b>${escapeHtml(thought.intent || 'Conversación')}</b></span>
+            <span>CPU Libre: <b ${cpuClass}>${Math.round(thought.cpu_headroom || 0)}%</b></span>
+            <span>Gobernador: <b>${thought.governor_active ? 'Headroom Guard ON' : 'Normal'}</b></span>
+            ${memsCount > 0 ? `<span>Recuerdos: <b>${memsCount} asimilados</b></span>` : ''}
+          </div>
+        </div>
+      </details>
+    `;
+  }
+
+  // ── Markdown con Detección de Comandos y Terminal Embebido ──
+  function formatFrondaMarkdown(rawText) {
+    if (!rawText) return '';
+    const codeBlocks = [];
+    let processed = rawText.replace(/```([a-zA-Z0-9_\-\.]*)\n?([\s\S]*?)```/g, (match, lang, code) => {
+      const id = 'cmd_' + Math.random().toString(36).substring(2, 9);
+      codeBlocks.push({ id, lang: (lang || 'bash').toLowerCase(), code: code.trim() });
+      return `@@CODEBLOCK_${id}@@`;
+    });
+
+    processed = escapeHtml(processed);
+
+    processed = processed
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>');
+
+    codeBlocks.forEach(cb => {
+      const placeholder = `@@CODEBLOCK_${cb.id}@@`;
+      const isWindows = cb.lang.includes('ps') || cb.lang.includes('power') || cb.lang.includes('cmd') || cb.lang.includes('bat') || cb.lang.includes('win');
+      const defaultTarget = isWindows ? 'windows' : 'wsl';
+      const cleanEscapedCode = escapeHtml(cb.code);
+
+      const cardHtml = `
+        <div class="cmd-card" id="card-${cb.id}">
+          <div class="cmd-header">
+            <span class="cmd-lang">⚡ ${cb.lang.toUpperCase() || 'SHELL'}</span>
+            <div class="cmd-actions">
+              <button class="cmd-btn" onclick="executeCmd('${cb.id}', '${defaultTarget}', false)" title="Ejecutar en ${defaultTarget.toUpperCase()}">
+                ▶ Ejecutar (${defaultTarget.toUpperCase()})
+              </button>
+              <button class="cmd-btn admin" onclick="executeCmd('${cb.id}', '${defaultTarget}', true)" title="Ejecutar con permisos elevados de Administrador / Root">
+                🛡️ Admin
+              </button>
+              <button class="cmd-btn" onclick="copyCmd('${cb.id}')" title="Copiar comando">📋</button>
+            </div>
+          </div>
+          <pre class="cmd-code" id="code-${cb.id}">${cleanEscapedCode}</pre>
+          <div class="cmd-terminal-output" id="term-${cb.id}"></div>
+        </div>
+      `;
+      processed = processed.split(placeholder).join(cardHtml);
+    });
+
+    return processed;
+  }
+
+  // ── Ejecución de Comandos con Privilegios Estándar o Admin ──
+  async function executeCmd(id, target, admin) {
+    const codeEl = document.getElementById(`code-${id}`);
+    const termEl = document.getElementById(`term-${id}`);
+    if (!codeEl || !termEl) return;
+
+    const command = codeEl.innerText.trim();
+    termEl.className = 'cmd-terminal-output visible';
+    termEl.innerHTML = `<span style="color:#00e5ff">⚙️ Ejecutando en ${target.toUpperCase()} (${admin ? 'ELEVADO / ADMIN' : 'ESTÁNDAR'})...</span>`;
+
+    try {
+      const res = await fetch(`${API}/api/command/run`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ command, target, admin })
+      });
+      const data = await res.json();
+      if (!res.ok || data.exit_code !== 0) {
+        termEl.className = 'cmd-terminal-output visible error';
+        const errTxt = data.stderr || data.error || data.stdout || 'Comando finalizado con código de error';
+        termEl.innerHTML = `⚠️ Fallo (Exit Code ${data.exit_code || res.status}):\n${escapeHtml(errTxt)}`;
+      } else {
+        termEl.className = 'cmd-terminal-output visible success';
+        const outTxt = data.stdout || '(Comando ejecutado con éxito sin salida estándar)';
+        termEl.innerHTML = `✅ Éxito (Exit Code 0):\n${escapeHtml(outTxt)}`;
+      }
+    } catch (err) {
+      termEl.className = 'cmd-terminal-output visible error';
+      termEl.innerHTML = `⚠️ Error de conexión: ${escapeHtml(err.message)}`;
+    }
+  }
+
+  function copyCmd(id) {
+    const codeEl = document.getElementById(`code-${id}`);
+    if (codeEl) {
+      navigator.clipboard.writeText(codeEl.innerText);
+    }
+  }
+
+  // ── Siri Waveform Visualizer ──
+  function initSiriWave() {
+    const canvas = document.getElementById('siri-wave');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    let phase = 0;
+
+    function resize() {
+      const rect = canvas.getBoundingClientRect();
+      const dpr = window.devicePixelRatio || 1;
+      canvas.width = rect.width * dpr;
+      canvas.height = rect.height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    function draw() {
+      const rect = canvas.getBoundingClientRect();
+      const width = rect.width;
+      const height = rect.height;
+      ctx.clearRect(0, 0, width, height);
+
+      const isSpeakingAudio = window._currentAudio && !window._currentAudio.paused;
+      let targetAmp = 3.5;
+      let speed = 0.04;
+
+      if (micActive) {
+        targetAmp = 18.0 + Math.sin(Date.now() * 0.012) * 5.0;
+        speed = 0.12;
+      } else if (isSpeakingAudio) {
+        targetAmp = 15.0 + Math.cos(Date.now() * 0.009) * 4.5;
+        speed = 0.09;
+      } else if (isWorking) {
+        targetAmp = 10.0 + Math.sin(Date.now() * 0.02) * 3.5;
+        speed = 0.15;
+      }
+
+      phase += speed;
+      const midY = height / 2;
+
+      const waves = [
+        { color: 'rgba(0, 255, 170, 0.85)', amp: targetAmp * 1.0,  freq: 0.018, phaseShift: 0,   lineWidth: 2.2 },
+        { color: 'rgba(0, 229, 255, 0.80)', amp: targetAmp * 0.75, freq: 0.025, phaseShift: 1.8, lineWidth: 1.8 },
+        { color: 'rgba(139, 92, 246, 0.75)', amp: targetAmp * 0.55, freq: 0.032, phaseShift: 3.5, lineWidth: 1.5 },
+        { color: 'rgba(255, 255, 255, 0.55)', amp: targetAmp * 0.35, freq: 0.040, phaseShift: 5.0, lineWidth: 1.0 },
+      ];
+
+      waves.forEach(w => {
+        ctx.beginPath();
+        ctx.strokeStyle = w.color;
+        ctx.lineWidth = w.lineWidth;
+        ctx.shadowColor = w.color;
+        ctx.shadowBlur = targetAmp > 8 ? 14 : 5;
+
+        const step = 2;
+        for (let x = 0; x <= width; x += step) {
+          const envelope = Math.sin((Math.PI * x) / width);
+          const y = midY + Math.sin(x * w.freq + phase + w.phaseShift) * w.amp * envelope;
+          if (x === 0) ctx.moveTo(x, y);
+          else ctx.lineTo(x, y);
+        }
+        ctx.stroke();
+      });
+
+      ctx.shadowBlur = 0;
+
+      const hudLabel = document.getElementById('waveform-status-label');
+      if (hudLabel) {
+        if (micActive) {
+          hudLabel.textContent = 'MIC EN VIVO // ESCUCHANDO VOZ';
+          hudLabel.style.color = '#00e5ff';
+        } else if (isSpeakingAudio) {
+          hudLabel.textContent = 'NEURAL TTS // SINTETIZANDO VOZ';
+          hudLabel.style.color = '#00ffaa';
+        } else if (isWorking) {
+          hudLabel.textContent = 'PROCESAMIENTO COGNITIVO // PENSANDO';
+          hudLabel.style.color = '#c4b5fd';
+        } else {
+          hudLabel.textContent = 'FRONDA BIOMETRIC HUD // LISTO';
+          hudLabel.style.color = 'var(--muted)';
+        }
+      }
+
+      requestAnimationFrame(draw);
+    }
+
+    requestAnimationFrame(draw);
+  }
+
+  function addMessage(role, text, skill = null, isTyping = false, thought = null) {
     const isFronda = role === 'fronda';
     const div = document.createElement('div');
     div.className = `msg ${isFronda ? 'fronda' : 'user'}`;
@@ -541,14 +975,21 @@
       skillHtml = `<div class="skill-badge">⚡ SKILL EJECUTADO: ${skill.toUpperCase()}</div>`;
     }
 
+    let thoughtHtml = '';
+    if (thought) {
+      thoughtHtml = renderThoughtBubble(thought);
+    }
+
+    const userName = (frondaConfig.user_nickname || 'David').toUpperCase();
     div.innerHTML = `
-      <div class="msg-avatar">${isFronda ? 'F1' : 'D'}</div>
+      <div class="msg-avatar">${isFronda ? 'F1' : userName.charAt(0)}</div>
       <div class="msg-body">
-        <div class="msg-sender">${isFronda ? 'FRONDA 1.0' : 'DAVID'}</div>
+        <div class="msg-sender">${isFronda ? 'FRONDA 1.0' : userName}</div>
         <div class="msg-bubble">
+          ${thoughtHtml}
           ${skillHtml}
           <div class="bubble-text">
-            ${isTyping ? '<span>Analizando y procesando...</span>' : escapeHtml(text)}
+            ${isTyping ? '<span>Analizando y procesando...</span>' : (isFronda ? formatFrondaMarkdown(text) : escapeHtml(text))}
           </div>
         </div>
       </div>`;
@@ -557,15 +998,28 @@
     return div;
   }
 
-  function updateBubble(div, text, skill = null) {
+  function updateBubble(div, text, skill = null, thought = null) {
+    const bubble = div.querySelector('.msg-bubble');
     const bText = div.querySelector('.bubble-text');
-    if (bText) bText.innerHTML = escapeHtml(text);
+
+    if (thought && !div.querySelector('.thought-bubble')) {
+      const thoughtHtml = renderThoughtBubble(thought);
+      if (thoughtHtml) {
+        const tWrap = document.createElement('div');
+        tWrap.innerHTML = thoughtHtml;
+        bubble.insertBefore(tWrap.firstElementChild, bubble.firstChild);
+      }
+    }
+
     if (skill && !div.querySelector('.skill-badge')) {
-      const bubble = div.querySelector('.msg-bubble');
       const badge = document.createElement('div');
       badge.className = 'skill-badge';
       badge.textContent = `⚡ SKILL EJECUTADO: ${skill.toUpperCase()}`;
       bubble.insertBefore(badge, bText);
+    }
+
+    if (bText) {
+      bText.innerHTML = formatFrondaMarkdown(text);
     }
   }
 
@@ -599,15 +1053,25 @@
       const data = await res.json();
       const response = data.response || '(sin respuesta)';
 
-      updateBubble(typingDiv, response, data.skill_executed);
+      updateBubble(typingDiv, response, data.skill_executed, data.thought);
       messages.push({ role: 'assistant', content: response });
       setStatus('speaking', 'HABLANDO...');
+      pollFailures = 0;  // reset contador de fallos al recibir respuesta
 
-      // Reproducir voz sintetizada a través del navegador (óptimo para ejecución en WSL)
+      // Reproducir voz sintetizada a través del navegador con audio_id sincronizado
       try {
-        const audio = new Audio(`${API}/api/audio?t=${Date.now()}`);
+        if (window._currentAudio) {
+          window._currentAudio.pause();
+          window._currentAudio = null;
+        }
+        const audioUrl = data.audio_id
+          ? `${API}/api/audio?id=${encodeURIComponent(data.audio_id)}`
+          : `${API}/api/audio?t=${Date.now()}`;
+        const audio = new Audio(audioUrl);
+        window._currentAudio = audio;
         audio.play().catch(() => {});
         audio.onended = () => {
+          if (window._currentAudio === audio) window._currentAudio = null;
           if (!isWorking && !micActive) setStatus('', 'EN LÍNEA');
         };
       } catch (_) {}
@@ -734,26 +1198,40 @@
     refreshRequests();
   });
 
+  let _reqFilter = 'all';
+
+  function setReqFilter(filter, btn) {
+    _reqFilter = filter;
+    document.querySelectorAll('.req-filter button').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    refreshRequests();
+  }
+
   async function refreshRequests() {
     try {
       const res = await fetch(`${API}/api/skills/requests`);
       const list = await res.json();
       const reqListDiv = document.getElementById('requests-list');
       const reqCountSpan = document.getElementById('req-count');
-      
+
       const pending = list.filter(r => r.estado === 'PENDIENTE_DESARROLLO');
       reqCountSpan.textContent = pending.length;
 
+      // Aplicar filtro
+      const filtered = _reqFilter === 'all' ? list
+        : list.filter(r => r.estado === _reqFilter);
+
       reqListDiv.innerHTML = '';
-      if (list.length === 0) {
-        reqListDiv.innerHTML = '<div style="color:var(--muted); font-size: 13px;">No hay solicitudes registradas aún.</div>';
+      if (filtered.length === 0) {
+        reqListDiv.innerHTML = '<div style="color:var(--muted); font-size: 13px;">No hay solicitudes para este filtro.</div>';
         return;
       }
 
-      list.slice().reverse().forEach(req => {
+      filtered.slice().reverse().forEach(req => {
         const card = document.createElement('div');
         const isPending = req.estado === 'PENDIENTE_DESARROLLO';
         card.className = `skill-req-card ${isPending ? '' : 'installed'}`;
+        card.dataset.id = req.id;
         card.innerHTML = `
           <div style="display:flex; justify-content:space-between; align-items:center;">
             <span class="req-badge">${req.id} &bull; ${req.categoria.toUpperCase()}</span>
@@ -764,10 +1242,38 @@
           <div style="margin-top:6px; font-weight:600; color:var(--text);">${escapeHtml(req.peticion_usuario)}</div>
           <div class="req-meta">${escapeHtml(req.descripcion)}</div>
           <div style="font-size:10px; color:var(--muted); margin-top:4px;">Asignado a: <b>${req.responsable || 'Antigravity'}</b></div>
+          <div class="ticket-actions">
+            ${isPending ? `<button class="ticket-btn install" data-id="${req.id}" onclick="markInstalled(this)">✅ Marcar Instalado</button>` : ''}
+            <button class="ticket-btn del" data-id="${req.id}" onclick="deleteTicket(this)">🗑 Eliminar</button>
+          </div>
         `;
         reqListDiv.appendChild(card);
       });
     } catch (_) {}
+  }
+
+  async function markInstalled(btn) {
+    const id = btn.dataset.id;
+    btn.disabled = true;
+    btn.textContent = '...';
+    try {
+      await fetch(`${API}/api/skills/requests/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ estado: 'INSTALADO' })
+      });
+      refreshRequests();
+    } catch (_) { btn.disabled = false; btn.textContent = '✅ Marcar Instalado'; }
+  }
+
+  async function deleteTicket(btn) {
+    const id = btn.dataset.id;
+    if (!confirm(`¿Eliminar ticket ${id}?`)) return;
+    btn.disabled = true;
+    try {
+      await fetch(`${API}/api/skills/requests/${id}`, { method: 'DELETE' });
+      refreshRequests();
+    } catch (_) { btn.disabled = false; }
   }
 
   document.getElementById('btn-save-manual-mem').addEventListener('click', async () => {
@@ -783,12 +1289,25 @@
     refreshMemory();
   });
 
-  // ── Switch de Potencia de Modelo (Turbo 1.5B vs Ingeniero 3B) ──
+  // ── Switch de Modelo Dinámico ──
   const btnToggleMode = document.getElementById('btn-toggle-mode');
-  let currentModel = 'frondabrick';
+  let currentModel = frondaConfig.default_model || 'frondabrick';
+
+  function _updateModelBtn() {
+    const isDefault = currentModel === (frondaConfig.default_model || 'frondabrick');
+    const label = isDefault ? `⚡ MODO: ${currentModel.toUpperCase()}` : `⚡ MODO: ${currentModel.toUpperCase()}`;
+    btnToggleMode.textContent = label;
+    btnToggleMode.style.borderColor = isDefault ? 'var(--emerald)' : 'var(--cyan)';
+    btnToggleMode.style.color       = isDefault ? 'var(--emerald)' : 'var(--cyan)';
+    localStorage.setItem('fronda_model', currentModel);
+  }
 
   btnToggleMode.addEventListener('click', async () => {
-    const nextModel = (currentModel === 'frondabrick') ? 'qwen2.5-coder:1.5b' : 'frondabrick';
+    // Obtener lista actualizada de modelos disponibles
+    const available = frondaConfig.available_models || [frondaConfig.default_model, frondaConfig.fallback_model];
+    const idx       = available.indexOf(currentModel);
+    const nextModel = available[(idx + 1) % available.length] || frondaConfig.fallback_model;
+
     try {
       btnToggleMode.textContent = '⚡ CAMBIANDO...';
       const res = await fetch(`${API}/api/model/switch`, {
@@ -798,22 +1317,35 @@
       });
       if (res.ok) {
         currentModel = nextModel;
-        if (currentModel === 'frondabrick') {
-          btnToggleMode.textContent = '⚡ MODO: INGENIERO (3B)';
-          btnToggleMode.style.borderColor = 'var(--emerald)';
-          btnToggleMode.style.color = 'var(--emerald)';
-        } else {
-          btnToggleMode.textContent = '⚡ MODO: TURBO (1.5B)';
-          btnToggleMode.style.borderColor = 'var(--cyan)';
-          btnToggleMode.style.color = 'var(--cyan)';
-        }
+        _updateModelBtn();
       }
     } catch (_) {
-      btnToggleMode.textContent = (currentModel === 'frondabrick') ? '⚡ MODO: INGENIERO (3B)' : '⚡ MODO: TURBO (1.5B)';
+      _updateModelBtn();
     }
   });
 
-  // ── Telemetría Polling ──
+  // Restaurar drawer si estaba abierto
+  if (PREF_DRAWER) {
+    drawer.classList.add('open');
+    refreshMemory();
+    refreshRequests();
+  }
+
+  // ── Telemetría Polling con Sparklines ──
+  const _sparkCpuPts = [];
+  const _sparkRamPts = [];
+  const SPARK_MAX = 30;
+
+  function _buildSparkPoints(data, max = 100) {
+    if (data.length === 0) return '';
+    const w = 60, h = 20;
+    return data.map((v, i) => {
+      const x = (i / (SPARK_MAX - 1)) * w;
+      const y = h - (Math.min(v, max) / max) * h;
+      return `${x.toFixed(1)},${y.toFixed(1)}`;
+    }).join(' ');
+  }
+
   async function pollTelemetry() {
     try {
       const res = await fetch(`${API}/api/telemetry`);
@@ -822,29 +1354,77 @@
         document.getElementById('telem-cpu').textContent = `${t.cpu_percent}%`;
         document.getElementById('telem-ram').textContent = `${t.ram_used_gb} GB (${t.ram_percent}%)`;
         document.getElementById('telem-disk').textContent = `${t.disk_free_gb} GB LIBRES`;
+
+        // Sparklines
+        _sparkCpuPts.push(t.cpu_percent);
+        if (_sparkCpuPts.length > SPARK_MAX) _sparkCpuPts.shift();
+        _sparkRamPts.push(t.ram_percent);
+        if (_sparkRamPts.length > SPARK_MAX) _sparkRamPts.shift();
+
+        document.getElementById('spark-cpu-line').setAttribute('points', _buildSparkPoints(_sparkCpuPts));
+        document.getElementById('spark-ram-line').setAttribute('points', _buildSparkPoints(_sparkRamPts));
+
+        // Alertas
+        const alertEl = document.getElementById('telem-alert');
+        const alerts = [];
+        if (t.cpu_percent > 90) alerts.push(`⚠️ CPU ${t.cpu_percent}%`);
+        if (t.ram_percent > 85) alerts.push(`⚠️ RAM ${t.ram_percent}%`);
+        if (alerts.length) {
+          alertEl.textContent = alerts.join(' | ');
+          alertEl.style.display = 'block';
+        } else {
+          alertEl.style.display = 'none';
+        }
       }
     } catch (_) {}
   }
 
-  // ── Polling de estado ──
+  // ── Polling de estado con detección de desconexión ──
   setInterval(async () => {
     try {
-      const res  = await fetch(`${API}/api/status`);
+      const res  = await fetch(`${API}/api/status`, { signal: AbortSignal.timeout(3000) });
       const data = await res.json();
+      pollFailures = 0;  // reset al conectar
       if (!isWorking && !micActive) {
-        if (data.speaking)        setStatus('speaking',   'HABLANDO...');
-        else if (data.processing) setStatus('processing', 'PROCESANDO...');
-        else                      setStatus('',            'EN LÍNEA');
+        if (!data.ollama_online) {
+          setStatus('processing', '⚠️ OLLAMA OFFLINE');
+        } else if (data.speaking) {
+          setStatus('speaking',   'HABLANDO...');
+        } else if (data.processing) {
+          setStatus('processing', 'PROCESANDO...');
+        } else {
+          setStatus('', 'EN LÍNEA');
+        }
       }
-    } catch (_) {}
+    } catch (_) {
+      pollFailures++;
+      if (pollFailures >= MAX_POLL_FAILURES) {
+        setStatus('processing', '🔴 DESCONECTADO');
+        if (recognizer && micActive) { recognizer.stop(); }
+      }
+    }
   }, 900);
 
   setInterval(pollTelemetry, 5000);
   pollTelemetry();
   refreshMemory();
 
+  // Inicializar Siri Waveform HUD
+  initSiriWave();
+
   // Bienvenida de Fronda 1.0
-  addMessage('fronda', 'Fronda 1.0 inicializado. Clon digital de David Galleguillos en línea con aprendizaje continuo de memoria y suite de skills activa. ¿En qué trabajamos hoy?');
+  // Mensaje de bienvenida desde config del servidor (o fallback local)
+  const welcomeMsg = frondaConfig.welcome_message ||
+    'Fronda 1.0 inicializado. Clon digital en línea con memoria y skills activos. ¿En qué trabajamos hoy?';
+  addMessage('fronda', welcomeMsg);
+
+  // Guardar estado del drawer en localStorage
+  btnOpenMem.addEventListener('click', () => localStorage.setItem('fronda_drawer', 'open'));
+  btnCloseMem.addEventListener('click', () => localStorage.setItem('fronda_drawer', 'closed'));
+  document.getElementById('btn-toggle-drawer').addEventListener('click', () => {
+    const isOpen = drawer.classList.contains('open');
+    localStorage.setItem('fronda_drawer', isOpen ? 'closed' : 'open');
+  });
 </script>
 </body>
 </html>
