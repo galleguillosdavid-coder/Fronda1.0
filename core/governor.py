@@ -182,7 +182,10 @@ class CyberneticGovernor:
                     "total_failures": state.total_failures,
                     "last_error": state.last_error
                 }
-            report["cpu_headroom_percent"] = round(self.get_cpu_headroom(), 1)
+            headroom_info = self.get_cpu_headroom()
+            report["cpu_headroom_percent"] = round(headroom_info.get("cpu_headroom_percent", 50.0), 1)
+            report["cpu_percent"] = round(headroom_info.get("cpu_percent", 50.0), 1)
+            report["cpu_guard_active"] = self.cpu_guard_active
             return report
 
 
